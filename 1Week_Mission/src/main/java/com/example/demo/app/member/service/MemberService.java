@@ -1,9 +1,9 @@
-package com.example.demo.member.service;
+package com.example.demo.app.member.service;
 
 
-import com.example.demo.member.entity.Member;
-import com.example.demo.member.exception.AlreadyJoinException;
-import com.example.demo.member.repository.MemberRepository;
+import com.example.demo.app.member.exception.AlreadyJoinException;
+import com.example.demo.app.member.repository.MemberRepository;
+import com.example.demo.app.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;

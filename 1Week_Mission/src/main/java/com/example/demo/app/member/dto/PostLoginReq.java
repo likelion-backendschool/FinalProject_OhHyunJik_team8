@@ -1,4 +1,4 @@
-package com.example.demo.member.dto;
+package com.example.demo.app.member.dto;
 
 import lombok.Data;
 import org.springframework.lang.Nullable;

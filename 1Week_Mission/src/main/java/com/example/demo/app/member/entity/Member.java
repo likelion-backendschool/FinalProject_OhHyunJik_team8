@@ -1,6 +1,6 @@
-package com.example.demo.member.entity;
+package com.example.demo.app.member.entity;
 
-import com.example.demo.base.entity.BaseEntity;
+import com.example.demo.app.base.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
