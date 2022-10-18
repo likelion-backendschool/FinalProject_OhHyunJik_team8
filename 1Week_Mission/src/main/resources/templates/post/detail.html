@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>글 상세페이지</title>
+</head>
+
+<body>
+<main layout:fragment="main">
+    <div class="container">
+        <h1>글 상세페이지</h1>
+
+        <div>
+            작성 : [[${post.createDate}]]
+        </div>
+
+        <div>
+            수정 : [[${post.modifyDate}]]
+        </div>
+
+        <div>
+            작성자 : [[${post.author.username}]]
+        </div>
+
+        <div>
+            제목 : [[${post.subject}]]
+        </div>
+
+        <div class="toast-ui-viewer">
+            내용 :
+            <script type="text/x-template">
+                [[${post.content}]]
+            </script>
+        </div>
+        <span><i class="far fa-folder"></i>
+
+												<a class="badge badge-dark badge-sm rounded-pill text-uppercase px-2 py-1 me-1"
+                                                   th:each="tag :${post.keywords}"
+                                                   th:text="|${tag.keyword} |"></a>
+											</span>
+
+
+    </div>
+
+</main>
+
+</body>
+</html>

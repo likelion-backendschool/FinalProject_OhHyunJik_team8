@@ -34,19 +34,23 @@ public class PostService {
                 .build();
 
         postRepository.save(post);
-        insertHashTag(post,hashTags);
+        createHashTag(post,hashTags);
         return post;
     }
 
-    private void insertHashTag(Post article_id, List<String> tags) {
+    private void createHashTag(Post post, List<String> tags) {
         for (String tag : tags) {
-            article_id.addPostHashTags(tag);
-
+            post.addPostHashTags(tag);
         }
-        postRepository.save(article_id);
-
-//
+        postRepository.save(post);
     }
 
+    public Post getPostFromId(Long id) {
+        Post post = getArticleById(id);
+        return post;
+    }
 
+    private Post getArticleById(Long id) {
+        return postRepository.findById(id).orElse(null);
+    }
 }

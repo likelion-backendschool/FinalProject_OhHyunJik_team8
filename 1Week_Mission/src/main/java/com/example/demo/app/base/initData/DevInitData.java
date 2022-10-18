@@ -2,6 +2,7 @@ package com.example.demo.app.base.initData;
 
 
 import com.example.demo.app.member.service.MemberService;
+import com.example.demo.app.post.service.PostService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +13,9 @@ import org.springframework.context.annotation.Profile;
 public class DevInitData implements InitDataBefore {
     @Bean
     CommandLineRunner initData(
-            MemberService memberService) {
+            MemberService memberService, PostService postService) {
         return args -> {
-            before(memberService);
+            before(memberService,postService);
         };
     }
 }
