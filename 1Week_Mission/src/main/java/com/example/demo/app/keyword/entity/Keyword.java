@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity
 @Setter
@@ -14,13 +13,10 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Keyword {
-    @Id
-    @EqualsAndHashCode.Include
-    private String keyword;
+public class Keyword extends BaseEntity {
+    private String content;
 
     public String getListUrl() {
-        return "/article/list?kwType=keyword&kw=%s".formatted(keyword);
+        return "/article/list?kwType=keyword&kw=%s".formatted(content);
     }
 }

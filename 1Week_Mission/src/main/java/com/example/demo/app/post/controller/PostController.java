@@ -42,8 +42,16 @@ public class PostController {
 
     @GetMapping("/{id}")
     public String showDetail(Model model, @PathVariable Long id) {
-        Post post = postService.getPostFromId(id);
+        Post post = postService.getForPrintPostById(id);
         model.addAttribute("post", post);
         return "post/detail";
+    }
+
+
+
+    @GetMapping("/{id}/delete")
+    public String deleteDetail(Model model, @PathVariable Long id) {
+        postService.delete(id);
+        return "redirect:post/list";
     }
 }

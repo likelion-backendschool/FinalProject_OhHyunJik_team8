@@ -8,6 +8,11 @@
 <body>
 <main layout:fragment="main">
     <div class="container">
+        <div class="mt-2">
+            <a th:href="@{|/post/${post.id}/modify|}" class="btn btn-active btn-link">수정</a>
+            <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/post/${post.id}/delete|}" class="btn btn-active btn-link">삭제</a>
+        </div>
+
         <h1>글 상세페이지</h1>
 
         <div>
@@ -32,12 +37,10 @@
                 [[${post.content}]]
             </script>
         </div>
-        <span><i class="far fa-folder"></i>
-
-												<a class="badge badge-dark badge-sm rounded-pill text-uppercase px-2 py-1 me-1"
-                                                   th:each="tag :${post.keywords}"
-                                                   th:text="|${tag.keyword} |"></a>
-											</span>
+        <div>
+            해시태그 :
+            <th:block th:utext="${post.extra_hashTagLinks}"/>
+        </div>
 
 
     </div>

@@ -1,5 +1,7 @@
 package com.example.demo.app.post.service;
 
+import com.example.demo.app.hashtag.entity.HashTag;
+import com.example.demo.app.hashtag.service.HashTagService;
 import com.example.demo.app.member.entity.Member;
 import com.example.demo.app.post.entity.Post;
 import com.example.demo.app.post.repository.PostRepository;
@@ -15,6 +17,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final HashTagService hashTagService;
     public Post write(Long authorId, String subject, String content) {
         return write(new Member(authorId), subject, content);
     }
@@ -34,23 +37,32 @@ public class PostService {
                 .build();
 
         postRepository.save(post);
-        createHashTag(post,hashTags);
+        hashTagService.applyHashTags(post,hashTags);
+
         return post;
     }
 
-    private void createHashTag(Post post, List<String> tags) {
-        for (String tag : tags) {
-            post.addPostHashTags(tag);
-        }
-        postRepository.save(post);
-    }
 
-    public Post getPostFromId(Long id) {
-        Post post = getArticleById(id);
-        return post;
-    }
 
-    private Post getArticleById(Long id) {
+
+    private Post getPostById(Long id) {
         return postRepository.findById(id).orElse(null);
+    }
+
+    public void delete(Long id) {
+        postRepository.deleteById(id);
+    }
+
+    public Post getForPrintPostById(Long id) {
+        Post post = getPostById(id);
+
+        loadForPrintData(post);
+        return post;
+    }
+
+    private void loadForPrintData(Post post) {
+        List<HashTag> hashTags = hashTagService.getHashTags(post);
+
+        post.getExtra().put("hashTags", hashTags);
     }
 }
