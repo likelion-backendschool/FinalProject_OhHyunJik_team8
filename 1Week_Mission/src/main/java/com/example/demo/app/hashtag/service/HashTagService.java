@@ -71,4 +71,9 @@ public class HashTagService {
     public List<HashTag> getHashTagsByArticleIdIn(long[] ids) {
         return hashTagRepository.findAllByPostIdIn(ids);
     }
+
+    public void delete(Long id) {
+
+        hashTagRepository.deleteAllByPostId(id);
+    }
 }
