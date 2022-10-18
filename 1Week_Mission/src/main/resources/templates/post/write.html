@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>글쓰기</title>
+</head>
+
+
+<body>
+<section layout:fragment="main">
+    <div class="container">
+        <h1>글쓰기</h1>
+
+        <script>
+            function WriteForm__submit(form) {
+                form.subject.value = form.subject.value.trim();
+
+                if (form.subject.value.length == 0) {
+                    alert("제목을 입력해주세요.");
+                    form.subject.focus();
+                    return;
+                }
+
+                const editor = $(form).find(".toast-ui-editor").data("data-toast-editor");
+                const markdown = editor.getMarkdown();
+                console.log(markdown);
+                form.content.value = markdown.trim();
+
+                if (form.content.value.length == 0) {
+                    alert("내용을 입력해주세요.");
+                    form.content.focus();
+                    return;
+                }
+
+                form.content.value = form.content.value.trim();
+
+
+                form.submit();
+            }
+
+        </script>
+
+<!--        enctype="multipart/form-data"-->
+        <form th:action method="POST" onsubmit="WriteForm__submit(this); return false;">
+            <input type="hidden" name="content" placeholder="내용을 입력해주세요." />
+            <div>
+                <span>제목</span>
+                <input type="text" name="subject">
+            </div>
+            <div>
+                <span>내용</span>
+                <div class="toast-ui-editor" toast-ui-editor--height="400px"></div>
+            </div>
+<!--            <div>-->
+<!--                <input type="file" name="common__inBody__1" accept="image/png, image/gif, image/jpeg">-->
+<!--            </div>-->
+<!--            <div>-->
+
+<!--            </div>-->
+<!--            <th:block th:each="i : ${#numbers.sequence(1, 5)}">-->
+<!--                <div>-->
+<!--                    <span th:text="|${i}번 이미지|"></span>-->
+<!--                    <input type="file" th:name="|common\_\_inBody\_\_${i}|" accept="image/png, image/gif, image/jpeg">-->
+<!--                </div>-->
+<!--            </th:block>-->
+            <div>
+                <span>글쓰기</span>
+                <input type="submit" value="작성">
+            </div>
+
+        </form>
+    </div>
+</section>
+</body>
+</html>

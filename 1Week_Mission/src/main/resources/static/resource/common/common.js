@@ -27,3 +27,4 @@ function errorModal(msg) {
 function warningModal(msg) {
     toastr["warning"](msg);
 }
+
