@@ -46,7 +46,7 @@ public class MemberService {
 
 
 
-    public void welcomMail(String email) throws MessagingException {
+    public void welcomeMail(String email) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,"UTF-8");
         mimeMessageHelper.setFrom(from); // 보낼 주소
