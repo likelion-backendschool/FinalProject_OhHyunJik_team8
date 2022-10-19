@@ -75,4 +75,9 @@ public class MemberService {
     public Optional<Member> findByUserId(Long id) {
         return memberRepository.findById(id);
     }
+
+    public Optional<Member> findByEmail(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        return member;
+    }
 }
