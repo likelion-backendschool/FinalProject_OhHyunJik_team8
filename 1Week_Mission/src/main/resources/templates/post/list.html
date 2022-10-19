@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>글 리스트</title>
+</head>
+
+<body>
+<main layout:fragment="main">
+    <div class="container">
+        <h1>글 리스트</h1>
+
+        <ul>
+            <li th:each="post : ${posts}" class="flex gap-2 items-center">
+                <a th:href="@{|/post/${post.id}|}" th:text="|번호 : ${post.id}|">
+                </a>
+
+                <a th:href="@{|/post/${post.id}|}" th:text="|제목 : ${post.subject}|">
+                </a>
+
+                <th:block th:utext="|태그 : ${post.extra_hashTagLinks}|" />
+
+            </li>
+        </ul>
+    </div>
+</main>>
+</body>
+</html>

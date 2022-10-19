@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -65,5 +69,41 @@ public class PostService {
         List<HashTag> hashTags = hashTagService.getHashTags(post);
 
         post.getExtra().put("hashTags", hashTags);
+    }
+
+    public List<Post> getPosts() {
+        return postRepository.findAll();
+    }
+
+    public void loadForPrintData(List<Post> posts) {
+        long[] ids = posts
+                .stream()
+                .mapToLong(Post::getId)
+                .toArray();
+
+        List<HashTag> hashTagsByPostIds = hashTagService.getHashTagsByPostIdIn(ids);
+
+        Map<Long, List<HashTag>> hashTagsByArticleIdsMap = hashTagsByPostIds.stream()
+                .collect(groupingBy(
+                        hashTag -> hashTag.getPost().getId(), toList()
+                ));
+
+        posts.stream().forEach(article -> {
+            List<HashTag> hashTags = hashTagsByArticleIdsMap.get(article.getId());
+
+            if (hashTags == null || hashTags.size() == 0) return;
+
+            article.getExtra().put("hashTags", hashTags);
+        });
+
+
+
+        //log.debug("posts : " + posts);
+    }
+
+    public void modify(Post post, String subject, String content) {
+        post.setSubject(subject);
+        post.setContent(content);
+        postRepository.save(post);
     }
 }
