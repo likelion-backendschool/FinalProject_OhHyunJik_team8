@@ -78,4 +78,20 @@ public class MemberController {
         return "redirect:/member/profile?msg=" + Ut.url.encode("회원가입이 완료되었습니다.");
     }
 
+    @PreAuthorize("isAnonymous()")
+    @GetMapping("/findUsername")
+    public String postFindUsername(@AuthenticationPrincipal MemberContext memberContext, Model model) {
+        return "member/findUsername";
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @PostMapping("/findUsername")
+    public String showFindUsername(@AuthenticationPrincipal MemberContext memberContext, Model model,@Valid PostProfileReq modifyFrom) {
+        Optional<Member> member = memberService.findByUserId(memberContext.getId());
+        memberService.modifyProfile(member.get(),modifyFrom.getEmail(),modifyFrom.getNickname());
+        memberContext.setEmail(modifyFrom.getEmail());
+        memberContext.setNickname(modifyFrom.getNickname());
+        return "redirect:/member/profile?msg=" + Ut.url.encode("회원가입이 완료되었습니다.");
+    }
+
 }
