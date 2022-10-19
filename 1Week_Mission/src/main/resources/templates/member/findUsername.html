@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>아이디 찾기 </title>
+</head>
+
+<body>
+<main layout:fragment="main">
+    <section class="section section-login flex-grow flex flex-col items-center justify-center">
+        <form th:action method="POST" class="flex flex-col gap-3" onsubmit="MemberLogin__submit(this); return false;">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">이메일</span>
+                </label>
+                <input type="email" name="email" placeholder="이메일" class="input input-bordered" maxlength="50" >
+            </div>
+
+
+
+            <div class="grid grid-cols-2 mt-2 gap-2">
+                <input class="btn btn-primary" type="submit" value="아이디찾기">
+            </div>
+        </form>
+
+
+
+    </section>
+
+</main>
+</body>
+</html>
