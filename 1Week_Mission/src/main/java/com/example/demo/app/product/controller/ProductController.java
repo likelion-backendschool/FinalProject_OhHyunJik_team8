@@ -7,6 +7,7 @@ import com.example.demo.app.product.entity.Product;
 import com.example.demo.app.product.service.ProductService;
 import com.example.demo.util.Ut;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,5 +39,13 @@ public class ProductController {
         }
         model.addAttribute("product",product.get());
         return "product/detail";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/write")
+    public String getWrite(Model model) {
+        List<Keyword> keywords = keywordService.findAll();
+        model.addAttribute("keywords",keywords);
+        return "product/write";
     }
 }
