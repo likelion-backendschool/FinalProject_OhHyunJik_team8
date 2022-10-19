@@ -3,6 +3,7 @@ package com.example.demo.app.security.dto;
 
 import com.example.demo.app.member.entity.Member;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -12,13 +13,14 @@ import java.util.List;
 
 
 @Getter
+@Setter
 public class MemberContext extends User {
     private final Long id;
     private final LocalDateTime createDate;
     private final LocalDateTime modifyDate;
     private final String username;
-    private final String email;
-    private final String nickname;
+    private String email;
+    private String nickname;
     public MemberContext(Member member, List<GrantedAuthority> authorities) {
         super(member.getUsername(), member.getPassword(), authorities);
         this.id = member.getId();
