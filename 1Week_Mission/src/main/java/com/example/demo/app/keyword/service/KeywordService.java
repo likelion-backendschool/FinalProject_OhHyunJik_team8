@@ -28,4 +28,9 @@ public class KeywordService {
 
         return keyword;
     }
+
+    public Keyword getKeyWordByContent(String keyword) {
+        Optional<Keyword> productKeyword = keywordRepository.findByContent(keyword);
+        return productKeyword.get();
+    }
 }

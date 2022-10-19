@@ -1,6 +1,7 @@
 package com.example.demo.app.product.service;
 
 
+import com.example.demo.app.keyword.entity.Keyword;
 import com.example.demo.app.member.entity.Member;
 import com.example.demo.app.post.repository.PostRepository;
 import com.example.demo.app.product.entity.Product;
@@ -14,8 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProductService {
     private final ProductRepository productRepository;
-    public Product create(Member member2, String 상품1, int price, String 키워드1) {
-
+    public Product create(Member member2, String subject, int price, Keyword keyWord) {
+        Product product = Product
+                .builder()
+                .seller(member2)
+                .postKeyword(keyWord)
+                .subject(subject)
+                .price(price)
+                .build();
+        productRepository.save(product);
+        return product;
 
     }
 }
