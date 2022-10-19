@@ -5,6 +5,7 @@ import com.example.demo.app.keyword.repository.KeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,14 @@ public class KeywordService {
         keywordRepository.save(keyword);
 
         return keyword;
+    }
+
+    public Keyword getKeyWordByContent(String keyword) {
+        Optional<Keyword> productKeyword = keywordRepository.findByContent(keyword);
+        return productKeyword.get();
+    }
+
+    public List<Keyword> findAll() {
+        return keywordRepository.findAll();
     }
 }
