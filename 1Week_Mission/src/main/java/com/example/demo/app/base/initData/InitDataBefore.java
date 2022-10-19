@@ -6,12 +6,14 @@ import com.example.demo.app.member.entity.Member;
 import com.example.demo.app.member.service.MemberService;
 import com.example.demo.app.post.entity.Post;
 import com.example.demo.app.post.service.PostService;
+import com.example.demo.app.product.entity.Product;
+import com.example.demo.app.product.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface InitDataBefore {
-    default void before(MemberService memberService, PostService postService){
+    default void before(MemberService memberService, PostService postService, ProductService productService){
         List<String> keyword1 = new ArrayList<>();
         List<String> keyword2 = new ArrayList<>();
         keyword1.add("키워드1");
@@ -25,6 +27,7 @@ public interface InitDataBefore {
         Member member3 = memberService.join("user3", "1234", "user3@test.com",null);
         Post post1 = postService.write(member1,"제목 1" ,"- 내용1",keyword1);
         Post post2 = postService.write(member1,"제목 2" ,"- 내용3",keyword2);
+        Product product1 =productService.create(member2,"상품1",5000,"키워드1");
 
     }
 }
