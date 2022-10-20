@@ -70,7 +70,7 @@ public class PostController {
     @GetMapping("/{id}/delete")
     public String deleteDetail(Model model, @PathVariable Long id) {
         postService.delete(id);
-        return "redirect:post/list";
+        return "redirect:/post/list";
     }
 
     @PreAuthorize("isAuthenticated()")
