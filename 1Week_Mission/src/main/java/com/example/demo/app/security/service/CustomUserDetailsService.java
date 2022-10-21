@@ -29,6 +29,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (member.getUsername().equals("user1")) {
             authorities.add(new SimpleGrantedAuthority("ADMIN"));
         }
+        if((member.getNickname() == null || member.getNickname().trim().isEmpty())!=true){
+            authorities.add(new SimpleGrantedAuthority("WRITER"));
+        }
 
         authorities.add(new SimpleGrantedAuthority("MEMBER"));
 
