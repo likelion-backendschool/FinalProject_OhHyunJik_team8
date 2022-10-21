@@ -56,13 +56,13 @@
 
             <form th:action method="POST" class="flex flex-col gap-3"
                   onsubmit="MemberJoin__submit(this); return false;">
-                <div class="form-control">
+                <div class="form-control" id="idCheck">
                     <label class="label">
                         <span class="label-text">아이디</span>
                     </label>
-                    <input autofocus type="text" name="username" placeholder="아이디" class="input input-bordered"
-                           maxlength="50">
-                    <button class="btn btn-outline btn-rounded btn-tertiary mb-2 " onclick="id_check(); return false">중복 체크</button>
+                    <input autofocus type="text" id="username" name="username" placeholder="아이디" class="input input-bordered"
+                           maxlength="50" required>
+                    <button class="btn btn-outline btn-rounded btn-tertiary mb-2 " onclick="username_check(); return false">중복 체크</button>
                 </div>
 
                 <div class="form-control">
@@ -73,11 +73,11 @@
                            placeholder="비밀번호" class="input input-bordered" maxlength="50">
                 </div>
 
-                <div class="form-control">
+                <div class="form-control" id="emailCheck">
                     <label class="label">
                         <span class="label-text">이메일</span>
                     </label>
-                    <input type="email" name="email" placeholder="이메일" class="input input-bordered" maxlength="50">
+                    <input type="email" id="email" name="email" placeholder="이메일" class="input input-bordered" maxlength="50">
                     <button class="btn btn-outline btn-rounded btn-tertiary mb-2 " onclick="email_check(); return false">중복 체크</button>
                 </div>
 

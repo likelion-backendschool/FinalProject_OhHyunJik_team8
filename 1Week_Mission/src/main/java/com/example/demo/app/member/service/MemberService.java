@@ -44,8 +44,6 @@ public class MemberService {
         return member;
     }
 
-
-
     public void welcomeMail(String email) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,"UTF-8");

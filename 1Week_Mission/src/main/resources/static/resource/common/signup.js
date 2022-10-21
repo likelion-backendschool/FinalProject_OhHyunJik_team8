@@ -1,17 +1,18 @@
 // 닉네임 체크
-function id_check() {
-    let nickname = $("#nickname").val();
-    console.log(nickname);
+function username_check() {
+    let username = $("#username").val();
+    console.log(username);
     $.ajax({
-        url: "/member/nicknameCheck", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-        data: {nickname: nickname},  // HTTP 요청과 함께 서버로 보낼 데이터
+        url: "/member/idCheck", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+        data: {username: username},  // HTTP 요청과 함께 서버로 보낼 데이터
         method: "GET",   // HTTP 요청 메소드(GET, POST 등)
         dataType: "html" // 서버에서 보내줄 데이터의 타입
     })
         // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
         .done(function (json) {
+            console.log(json);
             if ($("#duplicate").length === 0) {
-                $("#check").prepend("<div id='duplicate'>" + json + "</div>");
+                $("#idCheck").prepend("<div id='duplicate'>" + json + "</div>");
             } else {
                 $("#duplicate").text(json);
             }
@@ -33,18 +34,19 @@ function id_check() {
 
 // 이메일 체크
 function email_check() {
-    let nickname = $("#email").val();
+    let email = $("#email").val();
     console.log(email);
     $.ajax({
         url: "/member/emailCheck", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-        data: {nickname: nickname},  // HTTP 요청과 함께 서버로 보낼 데이터
+        data: {email: email},  // HTTP 요청과 함께 서버로 보낼 데이터
         method: "GET",   // HTTP 요청 메소드(GET, POST 등)
         dataType: "html" // 서버에서 보내줄 데이터의 타입
     })
         // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
         .done(function (json) {
+            console.log(json);
             if ($("#duplicate").length === 0) {
-                $("#check").prepend("<div id='duplicate'>" + json + "</div>");
+                $("#emailCheck").prepend("<div id='duplicate'>" + json + "</div>");
             } else {
                 $("#duplicate").text(json);
             }
