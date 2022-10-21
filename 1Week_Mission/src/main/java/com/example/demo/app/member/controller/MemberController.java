@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
@@ -71,12 +72,11 @@ public class MemberController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify")
-    public String editModifyProfile(@AuthenticationPrincipal MemberContext memberContext, Model model,@Valid PostProfileReq modifyFrom) {
+    public String editModifyProfile(@AuthenticationPrincipal MemberContext memberContext, @Valid PostProfileReq modifyFrom, HttpSession httpSession) {
         Optional<Member> member = memberService.findByUserId(memberContext.getId());
         memberService.modifyProfile(member.get(),modifyFrom.getEmail(),modifyFrom.getNickname());
-        memberContext.setEmail(modifyFrom.getEmail());
-        memberContext.setNickname(modifyFrom.getNickname());
-        return "redirect:/member/profile?msg=" + Ut.url.encode("프로필을 수정했습니다.");
+        httpSession.invalidate();
+        return "redirect:/member/login?msg=" + Ut.url.encode("프로필을 수정했습니다.");
     }
 
     @PreAuthorize("isAnonymous()")
