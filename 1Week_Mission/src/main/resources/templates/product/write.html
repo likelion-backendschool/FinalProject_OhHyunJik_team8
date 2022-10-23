@@ -13,13 +13,13 @@
 
         <script>
             function WriteForm__submit(form) {
-                form.email.value = form.email.value.trim();
-                if (form.email.value.length == 0) {
+                form.subject.value = form.subject.value.trim();
+                if (form.subject.value.length == 0) {
                     alert('이메일을 입력해주세요.');
-                    form.email.focus();
+                    form.subject.focus();
                     return;
                 }
-
+                form.price.value = form.price.value.trim();
 
                 form.submit();
             }
@@ -39,7 +39,7 @@
                 <input type="number" name="price">
             </div>
             <div>
-                <select name="job">
+                <select name="keyword">
                     <option th:each="key : ${keywords}" > [[${key.content}]]</option>
                 </select>
 

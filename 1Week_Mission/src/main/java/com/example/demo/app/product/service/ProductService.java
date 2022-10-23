@@ -3,6 +3,7 @@ package com.example.demo.app.product.service;
 
 import com.example.demo.app.keyword.entity.Keyword;
 import com.example.demo.app.member.entity.Member;
+import com.example.demo.app.post.entity.Post;
 import com.example.demo.app.post.repository.PostRepository;
 import com.example.demo.app.product.entity.Product;
 import com.example.demo.app.product.repository.ProductRepository;
@@ -18,11 +19,13 @@ import java.util.Optional;
 @Transactional
 public class ProductService {
     private final ProductRepository productRepository;
-    public Product create(Member member2, String subject, int price, Keyword keyWord) {
+
+
+    public Product create(Member seller, String subject, int price, Keyword keyword) {
         Product product = Product
                 .builder()
-                .seller(member2)
-                .postKeyword(keyWord)
+                .seller(seller)
+                .postKeyword(keyword)
                 .subject(subject)
                 .price(price)
                 .build();
@@ -30,6 +33,7 @@ public class ProductService {
         return product;
 
     }
+
     @Transactional(readOnly = true)
     public Optional<Product> productById(Long id) {
         return productRepository.findById(id);
