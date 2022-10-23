@@ -438,7 +438,12 @@
                     관리자 홈
                 </span>
             </a>
-
+            <a href="/post/list" class="inline-flex" sec:authorize="hasAuthority('WRITER')">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span class="ml-[2px] hidden sm:block">
+                    글 리스트
+                </span>
+            </a>
             <a href="/member/login" class="inline-flex" sec:authorize="isAnonymous()">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i>
                 <span class="ml-[2px] hidden sm:block">
@@ -465,12 +470,6 @@
                 </span>
             </a>
 
-            <a href="/song/create" class="inline-flex" sec:authorize="isAuthenticated()">
-                <i class="fa-solid fa-upload"></i>
-                <span class="ml-[2px] hidden sm:block">
-                    음원 업로드
-                </span>
-            </a>
         </div>
     </div>
 </header>

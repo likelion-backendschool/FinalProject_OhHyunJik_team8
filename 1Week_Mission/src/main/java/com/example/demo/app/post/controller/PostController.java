@@ -30,11 +30,12 @@ public class PostController {
     private final HashTagService hashTagService;
 
     @GetMapping("/list")
-    public String showList(Model model) {
-        List<Post> posts = postService.getPosts();
+    public String showList(Model model, @RequestParam(value = "kw", defaultValue = "") String kw
+            , @RequestParam(defaultValue = "keyword") String kwType) {
+        List<Post> posts = postService.getPosts(kwType,kw);
         postService.loadForPrintData(posts);
         model.addAttribute("posts", posts);
-        return "post/list";
+        return "redirect:/post/list";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -70,7 +71,7 @@ public class PostController {
     @GetMapping("/{id}/delete")
     public String deleteDetail(Model model, @PathVariable Long id) {
         postService.delete(id);
-        return "redirect:post/list";
+        return "redirect:/post/list";
     }
 
     @PreAuthorize("isAuthenticated()")

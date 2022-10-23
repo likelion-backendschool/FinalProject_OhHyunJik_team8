@@ -16,10 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -28,10 +31,9 @@ import java.util.Optional;
 public class MemberController {
     private final MemberService memberService;
 
-
     @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
-    public String join(@Valid PostLoginReq joinForm) throws MessagingException {
+    public String postJoin(@Valid PostLoginReq joinForm) throws MessagingException {
         memberService.join(joinForm.getUsername(), joinForm.getPassword(), joinForm.getEmail(), joinForm.getNickname());
         memberService.welcomeMail(joinForm.getEmail());
         return "redirect:/member/login?msg=" + Ut.url.encode("회원가입이 완료되었습니다.");
@@ -44,7 +46,6 @@ public class MemberController {
         if (uri != null && !uri.contains("/member/login")) {
             request.getSession().setAttribute("prevPage", uri);
         }
-
         return "member/login";
     }
 
@@ -71,12 +72,11 @@ public class MemberController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify")
-    public String editModifyProfile(@AuthenticationPrincipal MemberContext memberContext, Model model,@Valid PostProfileReq modifyFrom) {
+    public String editModifyProfile(@AuthenticationPrincipal MemberContext memberContext, @Valid PostProfileReq modifyFrom, HttpSession httpSession) {
         Optional<Member> member = memberService.findByUserId(memberContext.getId());
         memberService.modifyProfile(member.get(),modifyFrom.getEmail(),modifyFrom.getNickname());
-        memberContext.setEmail(modifyFrom.getEmail());
-        memberContext.setNickname(modifyFrom.getNickname());
-        return "redirect:/member/profile?msg=" + Ut.url.encode("프로필을 수정했습니다.");
+        httpSession.invalidate();
+        return "redirect:/member/login?msg=" + Ut.url.encode("프로필을 수정했습니다.");
     }
 
     @PreAuthorize("isAnonymous()")
@@ -94,6 +94,26 @@ public class MemberController {
         }
 
         return "redirect:/member/findUsername?msg=" + Ut.url.encode("해당 이메일로 가입된 아이디는 "+member.get().getUsername()+" 입니다.");
+    }
+
+    @GetMapping("/idCheck")
+    @ResponseBody
+    public String nicknameCheck(String username){
+        Optional<Member> users_ = memberService.findByUsername(username);
+        if (!users_.isPresent()){
+            return "사용 가능한 아이디입니다.";
+        }
+        return "닉네임이 중복 되었습니다.";
+    }
+
+    @GetMapping("/emailCheck")
+    @ResponseBody
+    public String emailCheck(String email){
+        Optional<Member> users_ = memberService.findByEmail(email);
+        if (!users_.isPresent()){
+            return "사용 가능한 이메일입니다.";
+        }
+        return "이메일이 중복 되었습니다.";
     }
 
 }

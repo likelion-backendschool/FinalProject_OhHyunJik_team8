@@ -6,9 +6,11 @@ import com.example.demo.app.member.entity.Member;
 import com.example.demo.app.post.entity.Post;
 import com.example.demo.app.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +73,16 @@ public class PostService {
         post.getExtra().put("hashTags", hashTags);
     }
 
-    public List<Post> getPosts() {
+    public List<Post> getPosts(String keyType, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        if (kw == null || kw.trim().length() == 0) {
+            return postRepository.findAll();
+        }
+        if (keyType.equals("keyword")) {
+            return  postRepository.findByHashTagContains(kw);
+        }
+
         return postRepository.findAll();
     }
 
