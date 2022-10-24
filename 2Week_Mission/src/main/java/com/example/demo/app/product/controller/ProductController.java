@@ -55,6 +55,7 @@ public class ProductController {
         model.addAttribute("keywords",keywords);
         return "product/write";
     }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
     public String PostWrite(@AuthenticationPrincipal MemberContext memberContext, @Valid PostProductReq postProductReq) {
@@ -65,4 +66,5 @@ public class ProductController {
         msg = Ut.url.encode(msg);
         return "redirect:/product/%d?msg=%s".formatted(product.getId(), msg);
     }
+
 }

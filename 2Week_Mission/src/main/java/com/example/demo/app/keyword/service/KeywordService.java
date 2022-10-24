@@ -15,18 +15,14 @@ public class KeywordService {
 
     public Keyword save(String keywordContent) {
         Optional<Keyword> optKeyword = keywordRepository.findByContent(keywordContent);
-
         if ( optKeyword.isPresent() ) {
             return optKeyword.get();
         }
-
         Keyword keyword = Keyword
                 .builder()
                 .content(keywordContent)
                 .build();
-
         keywordRepository.save(keyword);
-
         return keyword;
     }
 
@@ -38,4 +34,5 @@ public class KeywordService {
     public List<Keyword> findAll() {
         return keywordRepository.findAll();
     }
+
 }

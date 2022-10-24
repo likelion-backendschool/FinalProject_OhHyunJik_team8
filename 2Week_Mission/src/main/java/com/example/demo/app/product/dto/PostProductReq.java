@@ -7,8 +7,8 @@ import javax.validation.constraints.NotEmpty;
 public class PostProductReq {
     @NotEmpty
     private String subject;
-
     private int price;
     @NotEmpty
     private String keyword;
+
 }

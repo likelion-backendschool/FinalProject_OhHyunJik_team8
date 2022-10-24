@@ -86,4 +86,5 @@ public class PostController {
         String msg = Ut.url.encode("%d번 게시물이 수정되었습니다.".formatted(id));
         return "redirect:/post/%d?msg=%s".formatted(id, msg);
     }
+
 }

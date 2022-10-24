@@ -38,8 +38,8 @@ public class SecurityConfig {
                 .logout(
                         logout -> logout.logoutUrl("/member/logout")
                 );
-
         return http.build();
     }
+
 }
 

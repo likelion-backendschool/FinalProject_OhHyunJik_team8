@@ -19,7 +19,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         String url = "/member/login?errorMsg=" + Ut.url.encode("로그인 정보가 올바르지 않습니다.");
-
         redirectStrategy.sendRedirect(request, response, url);
     }
+
 }

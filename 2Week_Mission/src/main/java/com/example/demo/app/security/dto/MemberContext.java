@@ -47,10 +47,10 @@ public class MemberContext extends User {
         return getUsername();
     }
 
-
     public boolean memberIs(Member member) {
         return id.equals(member.getId());
     }
+
     public boolean memberIsNot(Member member) {
         return memberIs(member) == false;
     }

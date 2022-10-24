@@ -25,15 +25,20 @@ public interface InitDataBefore {
         keyword2.add("키워드2");
         keyword2.add("키워드4");
         keyword2.add("키워드5");
+
         Member member1 = memberService.join("user1", "1234", "user1@test.com","");
         Member member2 = memberService.join("user2", "1234", "user2@test.com","user2");
         Member member3 = memberService.join("user3", "1234", "user3@test.com",null);
+
         Post post1 = postService.write(member1,"제목 1" ,"- 내용1",keyword1);
         Post post2 = postService.write(member1,"제목 2" ,"- 내용3",keyword2);
+
         Keyword productTag1 = keywordService.getKeyWordByContent("키워드1");
         Keyword productTag2 = keywordService.getKeyWordByContent("키워드4");
+
         Product product1 =productService.create(member2,"상품1",5000,productTag1);
         Product product2 =productService.create(member1,"상품2",10000,productTag2);
+
         cartService.addItem(member2, product1);
         cartService.addItem(member2, product2);
     }

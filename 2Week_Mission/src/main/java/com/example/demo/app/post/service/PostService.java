@@ -35,6 +35,7 @@ public class PostService {
     public Post write(Member author, String subject, String content) {
         return write(author, subject, content, null);
     }
+
     public Post write(Member author, String subject, String content,List<String> hashTags) {
         Post post = Post
                 .builder()
@@ -42,15 +43,10 @@ public class PostService {
                 .subject(subject)
                 .content(content)
                 .build();
-
         postRepository.save(post);
         hashTagService.applyHashTags(post,hashTags);
-
         return post;
     }
-
-
-
 
     private Post getPostById(Long id) {
         return postRepository.findById(id).orElse(null);
@@ -63,14 +59,12 @@ public class PostService {
 
     public Post getForPrintPostById(Long id) {
         Post post = getPostById(id);
-
         loadForPrintData(post);
         return post;
     }
 
     private void loadForPrintData(Post post) {
         List<HashTag> hashTags = hashTagService.getHashTags(post);
-
         post.getExtra().put("hashTags", hashTags);
     }
 
@@ -83,7 +77,6 @@ public class PostService {
         if (keyType.equals("keyword")) {
             return  postRepository.findByHashTagContains(kw);
         }
-
         return postRepository.findAll();
     }
 
@@ -92,25 +85,16 @@ public class PostService {
                 .stream()
                 .mapToLong(Post::getId)
                 .toArray();
-
         List<HashTag> hashTagsByPostIds = hashTagService.getHashTagsByPostIdIn(ids);
-
         Map<Long, List<HashTag>> hashTagsByArticleIdsMap = hashTagsByPostIds.stream()
                 .collect(groupingBy(
                         hashTag -> hashTag.getPost().getId(), toList()
                 ));
-
         posts.stream().forEach(article -> {
             List<HashTag> hashTags = hashTagsByArticleIdsMap.get(article.getId());
-
             if (hashTags == null || hashTags.size() == 0) return;
-
             article.getExtra().put("hashTags", hashTags);
         });
-
-
-
-        //log.debug("posts : " + posts);
     }
 
     public void modify(Post post, String subject, String content) {
@@ -118,4 +102,5 @@ public class PostService {
         post.setContent(content);
         postRepository.save(post);
     }
+
 }

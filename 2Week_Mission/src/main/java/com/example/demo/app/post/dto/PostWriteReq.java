@@ -11,5 +11,4 @@ public class PostWriteReq {
     @NotEmpty
     private String content;
 
-
 }

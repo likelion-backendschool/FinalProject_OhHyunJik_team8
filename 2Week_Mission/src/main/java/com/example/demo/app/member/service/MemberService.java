@@ -31,7 +31,6 @@ public class MemberService {
         if (memberRepository.findByUsername(username).isPresent()) {
             throw new AlreadyJoinException();
         } // 해당건은 에러 처리를 어떻게 던져줄것인지 고민해보고 정하기로
-
             Member member = Member.builder()
                     .username(username)
                     .password(passwordEncoder.encode(password))
@@ -39,8 +38,6 @@ public class MemberService {
                     .nickname(nickname)
                     .build();
             memberRepository.save(member);
-
-
         return member;
     }
 
@@ -56,7 +53,6 @@ public class MemberService {
         body.append("회원가입을 환영합니다"); // 내용
         mimeMessageHelper.setText(body.toString(), true);
         javaMailSender.send(mimeMessage);
-
     }
 
     @Transactional(readOnly = true)
@@ -69,6 +65,7 @@ public class MemberService {
         member.setNickname(nickname);
         memberRepository.save(member);
     }
+
     @Transactional(readOnly = true)
     public Optional<Member> findByUserId(Long id) {
         return memberRepository.findById(id);
@@ -78,4 +75,5 @@ public class MemberService {
         Optional<Member> member = memberRepository.findByEmail(email);
         return member;
     }
+
 }

@@ -92,7 +92,6 @@ public class MemberController {
         if(member.isEmpty()){
             return "redirect:/member/findUsername?msg=" + Ut.url.encode("해당 이메일로 가입된 계정은 없습니다.");
         }
-
         return "redirect:/member/findUsername?msg=" + Ut.url.encode("해당 이메일로 가입된 아이디는 "+member.get().getUsername()+" 입니다.");
     }
 

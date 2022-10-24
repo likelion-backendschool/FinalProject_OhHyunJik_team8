@@ -40,7 +40,6 @@ public class Product extends BaseEntity {
         return true;
     }
 
-
     public String getJdenticon() {
         return "product__" + getId();
     }

@@ -16,7 +16,6 @@ import javax.persistence.Entity;
 @SuperBuilder
 @ToString(callSuper = true)
 public class Member extends BaseEntity {
-
     @Column(unique = true)
     private String username;
     @JsonIgnore

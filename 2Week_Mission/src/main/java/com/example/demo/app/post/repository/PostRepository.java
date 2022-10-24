@@ -10,7 +10,6 @@ import java.util.List;
 
 
 public interface PostRepository extends JpaRepository<Post,Long> {
-
     @Query(nativeQuery = true,value = "SELECT DISTINCT A.*\n" +
             "FROM keyword AS K\n" +
             "INNER JOIN hash_tag AS HT\n" +
@@ -19,4 +18,5 @@ public interface PostRepository extends JpaRepository<Post,Long> {
             "ON A.id = HT.post_id\n" +
             "WHERE K.content =:content")
     List<Post> findByHashTagContains(@Param("content")String kw);
+
 }

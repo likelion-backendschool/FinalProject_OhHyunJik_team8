@@ -31,14 +31,11 @@ public class ProductService {
                 .build();
         productRepository.save(product);
         return product;
-
     }
 
     @Transactional(readOnly = true)
     public Optional<Product> productById(Long id) {
         return productRepository.findById(id);
-
-
     }
 
     public List<Product> getProducts() {

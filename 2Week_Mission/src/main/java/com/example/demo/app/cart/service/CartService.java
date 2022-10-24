@@ -20,30 +20,24 @@ public class CartService {
     @Transactional
     public CartItem addItem(Member buyer, Product product) {
         CartItem oldCartItem = cartItemRepository.findByBuyerIdAndProductId(buyer.getId(), product.getId()).orElse(null);
-
         if (oldCartItem != null) {
             return oldCartItem;
         }
-
         CartItem cartItem = CartItem.builder()
                 .buyer(buyer)
                 .product(product)
                 .build();
-
         cartItemRepository.save(cartItem);
-
         return cartItem;
     }
 
     @Transactional
     public boolean removeItem(Member buyer, Product product) {
         CartItem oldCartItem = cartItemRepository.findByBuyerIdAndProductId(buyer.getId(), product.getId()).orElse(null);
-
         if (oldCartItem != null) {
             cartItemRepository.delete(oldCartItem);
             return true;
         }
-
         return false;
     }
 

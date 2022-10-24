@@ -7,7 +7,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 public class PostProfileReq {
-
     @NotEmpty
     private String email;
     @Nullable

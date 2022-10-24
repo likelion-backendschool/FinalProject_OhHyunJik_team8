@@ -29,17 +29,13 @@ public class Post extends BaseEntity {
 
     public String getExtra_inputValue_hashTagContents() {
         Map<String, Object> extra = getExtra();
-
         if (extra.containsKey("hashTags") == false) {
             return "";
         }
-
         List<HashTag> hashTags = (List<HashTag>) extra.get("hashTags");
-
         if (hashTags.isEmpty()) {
             return "";
         }
-
         return hashTags
                 .stream()
                 .map(hashTag -> "#" + hashTag.getKeyword().getContent())
@@ -49,17 +45,13 @@ public class Post extends BaseEntity {
 
     public String getExtra_hashTagLinks() {
         Map<String, Object> extra = getExtra();
-
         if (extra.containsKey("hashTags") == false) {
             return "";
         }
-
         List<HashTag> hashTags = (List<HashTag>) extra.get("hashTags");
-
         if (hashTags.isEmpty()) {
             return "";
         }
-
         return hashTags
                 .stream()
                 .map(hashTag -> {
@@ -74,4 +66,5 @@ public class Post extends BaseEntity {
                 .sorted()
                 .collect(Collectors.joining(" "));
     }
+
 }
