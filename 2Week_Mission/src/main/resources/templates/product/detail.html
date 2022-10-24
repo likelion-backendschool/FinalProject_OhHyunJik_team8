@@ -11,9 +11,10 @@
         <div class="mt-2">
             <a th:href="@{|/product/${product.id}/modify|}" class="btn btn-active btn-link">수정</a>
             <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/product/${product.id}/delete|}" class="btn btn-active btn-link">삭제</a>
+            <a th:href="@{|/cart/add/${product.id}|}" class="btn btn-active btn-link">장바구니추가</a>
         </div>
 
-        <h1>글 상세페이지</h1>
+        <h1>상품 상세페이지</h1>
 
         <div>
             작성 : [[${product.createDate}]]
