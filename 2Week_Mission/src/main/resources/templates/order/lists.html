@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>주문 정보</title>
+</head>
+
+<body>
+<main layout:fragment="main">
+
+    <h1>주문 리스트</h1>
+
+    <ul>
+        <li th:each="order : ${orderList}" class="flex gap-2 items-center">
+            <a th:href="@{|/order/${order.id}|}" th:text="|번호 : ${order.id}|">
+            </a>
+
+            <a th:href="@{|/order/${order.id}|}" th:text="|주문명 : ${order.name}|">
+            </a>
+            <a>
+                <a th:if="!${order.isPaid}and!${order.isRefunded}" th:text="|결제상태 : 미결제|">
+                </a>
+                <a th:if="${order.isPaid}and!${order.isRefunded}" th:text="|결제상태 : 결제완료|">
+                </a>
+            </a>
+
+<!--            <a th:href="@{|/product/${product.id}|}" th:text="|작성자 : ${product.seller.username}|">-->
+<!--            </a>-->
+
+<!--            <a th:href="@{|/product/${product.id}|}" th:text="|작성날짜 : ${product.createDate}|">-->
+<!--            </a>-->
+
+<!--            <a th:href="@{|/product/${product.id}|}" th:text="|작성날짜 : ${product.modifyDate}|">-->
+<!--            </a>-->
+        </li>
+    </ul>
+    </div>
+</main>
+</body>
+</html>

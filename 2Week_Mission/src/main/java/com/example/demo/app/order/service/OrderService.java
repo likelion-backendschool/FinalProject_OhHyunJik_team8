@@ -139,4 +139,9 @@ public class OrderService {
     public List<OrderItem> findAllByPayDateBetweenOrderByIdAsc(LocalDateTime fromDate, LocalDateTime toDate) {
         return orderItemRepository.findAllByPayDateBetween(fromDate, toDate);
     }
+
+    public List<Order> getOrders(Member buyer) {
+        List<Order> orderList = orderRepository.findAllByBuyerId(buyer.getId());
+        return orderList;
+    }
 }

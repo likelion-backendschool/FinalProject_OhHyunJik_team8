@@ -27,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -160,4 +161,14 @@ public class OrderController {
 
         return redirect;
     }
+
+    @GetMapping("/lists")
+    @PreAuthorize("isAuthenticated()")
+    public String showLists(@AuthenticationPrincipal MemberContext memberContext, Model model) {
+        Member buyer = memberContext.getMember();
+        List<Order> orderList = orderService.getOrders(buyer);
+        model.addAttribute("orderList", orderList);
+        return "order/lists";
+    }
+
 }
