@@ -4,6 +4,7 @@ import com.example.demo.app.cart.entity.CartItem;
 import com.example.demo.app.cart.service.CartService;
 import com.example.demo.app.member.entity.Member;
 import com.example.demo.app.member.service.MemberService;
+import com.example.demo.app.mybook.service.MyBookService;
 import com.example.demo.app.order.entity.Order;
 import com.example.demo.app.order.entity.OrderItem;
 import com.example.demo.app.order.repository.OrderItemRepository;
@@ -26,6 +27,7 @@ public class OrderService {
     private final CartService cartService;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final MyBookService myBookService;
 
     @Transactional
     public Order createFromCart(Member buyer) {
@@ -124,6 +126,10 @@ public class OrderService {
 
         order.setPaymentDone();
         orderRepository.save(order);
+
+        // 결제된 정보를 토대로 주문 품복들을 마이북 서비스 단으로 넘겨서 저장을 한다.
+        List<OrderItem> orderItems = order.getOrderItems();
+        myBookService.createMyBookList(buyer,orderItems);
     }
 
     public boolean actorCanPayment(Member actor, Order order) {

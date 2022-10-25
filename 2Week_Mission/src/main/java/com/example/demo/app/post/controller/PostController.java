@@ -35,7 +35,7 @@ public class PostController {
         List<Post> posts = postService.getPosts(kwType,kw);
         postService.loadForPrintData(posts);
         model.addAttribute("posts", posts);
-        return "redirect:/post/list";
+        return "post/list";
     }
 
     @PreAuthorize("isAuthenticated()")
