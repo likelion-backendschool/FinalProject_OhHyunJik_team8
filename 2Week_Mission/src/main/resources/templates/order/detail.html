@@ -11,7 +11,7 @@
 
     <script th:inline="javascript">
         const orderId = /*[[ ${order.id} ]]*/ null;
-        const buyerName = /*[[ ${order.buyer.name} ]]*/ null;
+        const buyerName = [[ ${order.buyer.name} ]];
         const orderName = /*[[ ${order.name} ]]*/ null;
         const orderPayPrice = /*[[ ${order.calculatePayPrice} ]]*/ null;
     </script>
@@ -56,7 +56,12 @@
                 <div th:if="${order.payable}">
                     <div>
                         보유 예치금 : [[${actorRestCash}]]
-                        <button onclick="payment();" class="btn btn-sm btn-primary">예치금 충전 </button>
+                        <button onclick="cacheCharge();" class="btn btn-sm btn-primary">예치금 충전 </button>
+                        <select name="chargeMoney" id="chargeMoney">
+                            <option> 10000</option>
+                            <option> 50000</option>
+                            <option> 100000</option>
+                        </select>
                     </div>
                     <div>
 
@@ -118,8 +123,8 @@
         }
 
         function cacheCharge() {
+            const cashChargeMoney = parseInt($("#chargeMoney").val());
             let useRestCash = parseInt($PaymentForm__useRestCash.val());
-
             if (orderPayPrice == useRestCash) {
                 document.payByRestCashOnlyForm.submit();
                 return;
@@ -128,12 +133,13 @@
             const method = "카드"; // "카드" 혹은 "가상계좌"
 
             const paymentData = {
-                amount: orderPayPrice - useRestCash,
-                orderId: "order__" + orderId + "__" + (Math.random() + "").substring(2),
+                amount: cashChargeMoney,
+                orderId: orderId + "__" + (Math.random() + "").substring(2),
                 orderName,
+                payMethod: method,
                 customerName: buyerName,
-                successUrl: window.location.origin + "/order/" + orderId + "/success",
-                failUrl: window.location.origin + "/order/" + orderId + "/fail"
+                successUrl: window.location.origin + "/cash/charge",
+                failUrl: window.location.origin + "/cash/charge/fail"
             };
 
             tossPayments.requestPayment(method, paymentData);

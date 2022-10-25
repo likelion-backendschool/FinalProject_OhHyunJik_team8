@@ -86,8 +86,8 @@ public class MemberService {
     @Transactional
     public RsData<AddCashRsDataBody> addCash(Member member, long price, String eventType) {
         CashLog cashLog = cashService.addCash(member, price, eventType);
-
-        long newRestCash = member.getRestCash() + cashLog.getPrice();
+        Optional<Member> updateMember = findByUserId(member.getId());
+        long newRestCash = updateMember.get().getRestCash() + cashLog.getPrice();
         member.setRestCash(newRestCash);
         memberRepository.save(member);
 
