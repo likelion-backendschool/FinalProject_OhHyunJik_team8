@@ -1,9 +1,15 @@
 package com.example.demo.app.member.service;
 
 
+import com.example.demo.app.base.dto.RsData;
+import com.example.demo.app.cash.entity.CashLog;
+import com.example.demo.app.cash.repository.CashLogRepository;
+import com.example.demo.app.cash.service.CashService;
 import com.example.demo.app.member.exception.AlreadyJoinException;
 import com.example.demo.app.member.repository.MemberRepository;
 import com.example.demo.app.member.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
+    private final CashService cashService;
 
     @Value("${spring.mail.username}") // 회원가입 발송메일주소
     private String from;
@@ -76,4 +83,31 @@ public class MemberService {
         return member;
     }
 
+    @Transactional
+    public RsData<AddCashRsDataBody> addCash(Member member, long price, String eventType) {
+        CashLog cashLog = cashService.addCash(member, price, eventType);
+
+        long newRestCash = member.getRestCash() + cashLog.getPrice();
+        member.setRestCash(newRestCash);
+        memberRepository.save(member);
+
+        return RsData.of(
+                "S-1",
+                "성공",
+                new AddCashRsDataBody(cashLog, newRestCash)
+        );
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class AddCashRsDataBody {
+        CashLog cashLog;
+        long newRestCash;
+    }
+
+    public long getRestCash(Member member) {
+        Member foundMember = findByUsername(member.getUsername()).get();
+
+        return foundMember.getRestCash();
+    }
 }

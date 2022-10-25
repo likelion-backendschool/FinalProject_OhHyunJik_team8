@@ -22,6 +22,11 @@ public class Member extends BaseEntity {
     private String password;
     private String email;
     private String nickname;
+    private long restCash;
+
+    public String getName() {
+        return username;
+    }
 
     public Member(long id) {
         super(id);
