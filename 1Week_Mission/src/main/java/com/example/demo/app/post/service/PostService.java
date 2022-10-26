@@ -24,6 +24,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final HashTagService hashTagService;
+
     public Post write(Long authorId, String subject, String content) {
         return write(new Member(authorId), subject, content);
     }
