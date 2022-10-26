@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -34,6 +34,7 @@ public class MemberService {
     @Value("${spring.mail.username}") // 회원가입 발송메일주소
     private String from;
 
+    @Transactional
     public Member join(String username, String password, String email, String nickname){
         if (memberRepository.findByUsername(username).isPresent()) {
             throw new AlreadyJoinException();
@@ -62,17 +63,16 @@ public class MemberService {
         javaMailSender.send(mimeMessage);
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
 
+    @Transactional
     public void modifyProfile(Member member,String email, String nickname) {
         member.updateInfo(email,nickname);
         memberRepository.save(member);
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findByUserId(Long id) {
         return memberRepository.findById(id);
     }

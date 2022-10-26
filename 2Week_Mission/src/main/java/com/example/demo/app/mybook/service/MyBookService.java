@@ -2,8 +2,7 @@ package com.example.demo.app.mybook.service;
 
 import com.example.demo.app.member.entity.Member;
 import com.example.demo.app.mybook.entity.MyBook;
-import com.example.demo.app.mybook.service.repository.MyBookRepository;
-import com.example.demo.app.order.entity.Order;
+import com.example.demo.app.mybook.repository.MyBookRepository;
 import com.example.demo.app.order.entity.OrderItem;
 import com.example.demo.app.product.entity.Product;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +26,7 @@ public class MyBookService {
         myBookRepository.save(myBook);
     }
 
+    @Transactional
     public void createMyBookList(Member member, List<OrderItem> orderItems){
         for(OrderItem orderItem: orderItems){
             createMyBook(member,orderItem.getProduct());

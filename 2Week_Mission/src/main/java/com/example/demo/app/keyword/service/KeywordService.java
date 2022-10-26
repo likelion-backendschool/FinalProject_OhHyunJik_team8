@@ -4,15 +4,18 @@ import com.example.demo.app.keyword.entity.Keyword;
 import com.example.demo.app.keyword.repository.KeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class KeywordService {
     private final KeywordRepository keywordRepository;
 
+    @Transactional
     public Keyword save(String keywordContent) {
         Optional<Keyword> optKeyword = keywordRepository.findByContent(keywordContent);
         if ( optKeyword.isPresent() ) {

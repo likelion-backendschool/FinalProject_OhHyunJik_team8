@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class PostService {
 
     private final PostRepository postRepository;
@@ -36,6 +36,7 @@ public class PostService {
         return write(author, subject, content, null);
     }
 
+    @Transactional
     public Post write(Member author, String subject, String content,List<String> hashTags) {
         Post post = Post
                 .builder()
@@ -52,6 +53,7 @@ public class PostService {
         return postRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public void delete(Long id) {
         hashTagService.delete(id);
         postRepository.deleteById(id);
@@ -97,6 +99,7 @@ public class PostService {
         });
     }
 
+    @Transactional
     public void modify(Post post, String subject, String content) {
         post.updatePost(subject,content);
         postRepository.save(post);

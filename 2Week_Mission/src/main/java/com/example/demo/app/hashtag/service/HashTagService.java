@@ -7,6 +7,7 @@ import com.example.demo.app.keyword.service.KeywordService;
 import com.example.demo.app.post.entity.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +18,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class HashTagService {
     private final KeywordService keywordService;
     private final HashTagRepository hashTagRepository;
 
+    @Transactional
     public void applyHashTags(Post post, List<String> keywordContents) {
         List<HashTag> oldHashTags = getHashTags(post);
         List<HashTag> needToDelete = new ArrayList<>();
@@ -60,6 +63,7 @@ public class HashTagService {
         return hashTagRepository.findAllByPostIdIn(ids);
     }
 
+    @Transactional
     public void delete(Long id) {
         hashTagRepository.deleteAllByPostId(id);
     }

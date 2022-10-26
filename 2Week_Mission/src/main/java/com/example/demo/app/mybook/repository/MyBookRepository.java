@@ -1,4 +1,4 @@
-package com.example.demo.app.mybook.service.repository;
+package com.example.demo.app.mybook.repository;
 
 import com.example.demo.app.member.entity.Member;
 import com.example.demo.app.mybook.entity.MyBook;

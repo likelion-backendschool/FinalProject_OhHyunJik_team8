@@ -5,12 +5,14 @@ import com.example.demo.app.cash.repository.CashLogRepository;
 import com.example.demo.app.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class CashService {
     private final CashLogRepository cashLogRepository;
 
+    @Transactional
     public CashLog addCash(Member member, long price, String eventType) {
         CashLog cashLog = CashLog.builder()
                 .member(member)

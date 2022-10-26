@@ -16,11 +16,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class ProductService {
     private final ProductRepository productRepository;
 
-
+    @Transactional
     public Product create(Member seller, String subject, int price, Keyword keyword) {
         Product product = Product
                 .builder()
@@ -33,7 +33,6 @@ public class ProductService {
         return product;
     }
 
-    @Transactional(readOnly = true)
     public Optional<Product> productById(Long id) {
         return productRepository.findById(id);
     }
