@@ -171,14 +171,8 @@ public class OrderController {
     @GetMapping("/{id}/cancel")
     @PreAuthorize("isAuthenticated()")
     public String deleteOrder(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id) {
-        Member buyer = memberContext.getMember();
-        Optional<Order> order = orderService.findForPrintById(id);
-//        if(buyer.getId()!=order.get().getBuyer().getId()){
-//            return "redirect:/order/lists" + "?msg=" + Ut.url.encode("권한이 없는 유저의 접근입니다.");
-//        }
         orderService.delete(id);
-        String redirect = "redirect:/order/lists" + "?msg=" + Ut.url.encode("미 결제 주문이 삭제되었습니다.");
-        return redirect;
+        return  "redirect:/order/lists" + "?msg=" + Ut.url.encode("미 결제 주문이 삭제되었습니다.");
     }
 
 }

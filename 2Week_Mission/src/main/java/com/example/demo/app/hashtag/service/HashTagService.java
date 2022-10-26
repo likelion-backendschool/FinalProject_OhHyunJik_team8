@@ -27,15 +27,18 @@ public class HashTagService {
     public void applyHashTags(Post post, List<String> keywordContents) {
         List<HashTag> oldHashTags = getHashTags(post);
         List<HashTag> needToDelete = new ArrayList<>();
+
         for (HashTag oldHashTag : oldHashTags) {
             boolean contains = keywordContents.stream().anyMatch(s -> s.equals(oldHashTag.getKeyword().getContent()));
             if (contains == false) {
                 needToDelete.add(oldHashTag);
             }
         }
+
         needToDelete.forEach(hashTag -> {
             hashTagRepository.delete(hashTag);
         });
+
         keywordContents.forEach(keywordContent -> {
             saveHashTag(post, keywordContent);
         });
@@ -44,9 +47,11 @@ public class HashTagService {
     private HashTag saveHashTag(Post post, String keywordContent) {
         Keyword keyword = keywordService.save(keywordContent);
         Optional<HashTag> opHashTag = hashTagRepository.findByPostIdAndKeywordId(post.getId(), keyword.getId());
+
         if (opHashTag.isPresent()) {
             return opHashTag.get();
         }
+
         HashTag hashTag = HashTag.builder()
                 .post(post)
                 .keyword(keyword)

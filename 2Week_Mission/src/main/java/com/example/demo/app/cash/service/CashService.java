@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CashService {
     private final CashLogRepository cashLogRepository;
 
@@ -19,7 +20,6 @@ public class CashService {
                 .price(price)
                 .eventType(eventType)
                 .build();
-
         cashLogRepository.save(cashLog);
 
         return cashLog;

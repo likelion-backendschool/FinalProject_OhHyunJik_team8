@@ -42,6 +42,7 @@ public class CartController {
     public String removeItems(@AuthenticationPrincipal MemberContext memberContext, String ids) {
         Member buyer = memberContext.getMember();
         String[] idsArr = ids.split(",");
+
         Arrays.stream(idsArr)
                 .mapToLong(Long::parseLong)
                 .forEach(id -> {
@@ -51,6 +52,7 @@ public class CartController {
                         cartService.removeItem(cartItem);
                     }
                 });
+
         return "redirect:/cart/lists?msg=" + Ut.url.encode("%d건의 품목을 삭제하였습니다.".formatted(idsArr.length));
     }
 
@@ -62,5 +64,4 @@ public class CartController {
         cartService.addItem(buyer,product.get());
         return "redirect:/cart/lists?msg=" + Ut.url.encode("%d번상품을 장바구니에 추가하였습니다.".formatted(id));
     }
-
 }

@@ -21,6 +21,7 @@ public class MemberContext extends User {
     private final String username;
     private final String email;
     private final String nickname;
+
     public MemberContext(Member member, List<GrantedAuthority> authorities) {
         super(member.getUsername(), member.getPassword(), authorities);
         this.id = member.getId();

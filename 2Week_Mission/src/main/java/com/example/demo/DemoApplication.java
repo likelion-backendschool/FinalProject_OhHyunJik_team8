@@ -20,5 +20,4 @@ public class DemoApplication {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

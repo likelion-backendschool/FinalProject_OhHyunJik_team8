@@ -18,9 +18,11 @@ public class KeywordService {
     @Transactional
     public Keyword save(String keywordContent) {
         Optional<Keyword> optKeyword = keywordRepository.findByContent(keywordContent);
+
         if ( optKeyword.isPresent() ) {
             return optKeyword.get();
         }
+
         Keyword keyword = Keyword
                 .builder()
                 .content(keywordContent)

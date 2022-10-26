@@ -38,14 +38,15 @@ public class MemberService {
     public Member join(String username, String password, String email, String nickname){
         if (memberRepository.findByUsername(username).isPresent()) {
             throw new AlreadyJoinException();
-        } // 해당건은 에러 처리를 어떻게 던져줄것인지 고민해보고 정하기로
-            Member member = Member.builder()
-                    .username(username)
-                    .password(passwordEncoder.encode(password))
-                    .email(email)
-                    .nickname(nickname)
-                    .build();
-            memberRepository.save(member);
+        }
+
+        Member member = Member.builder()
+                .username(username)
+                .password(passwordEncoder.encode(password))
+                .email(email)
+                .nickname(nickname)
+                .build();
+        memberRepository.save(member);
         return member;
     }
 
@@ -55,9 +56,7 @@ public class MemberService {
         mimeMessageHelper.setFrom(from); // 보낼 주소
         mimeMessageHelper.setTo(email); // 받을 주소
         mimeMessageHelper.setSubject("안녕하세요 백엔드스쿨"); // 제목
-
         StringBuilder body = new StringBuilder();
-
         body.append("회원가입을 환영합니다"); // 내용
         mimeMessageHelper.setText(body.toString(), true);
         javaMailSender.send(mimeMessage);
@@ -89,7 +88,6 @@ public class MemberService {
         long newRestCash = updateMember.get().getRestCash() + cashLog.getPrice();
         member.updateRestCash(newRestCash);
         memberRepository.save(member);
-
         return RsData.of(
                 "S-1",
                 "성공",
@@ -106,7 +104,6 @@ public class MemberService {
 
     public long getRestCash(Member member) {
         Member foundMember = findByUsername(member.getUsername()).get();
-
         return foundMember.getRestCash();
     }
 }

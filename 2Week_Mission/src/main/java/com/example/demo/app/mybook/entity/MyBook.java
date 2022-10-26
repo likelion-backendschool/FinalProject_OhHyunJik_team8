@@ -21,8 +21,6 @@ import static javax.persistence.FetchType.LAZY;
 public class MyBook extends BaseEntity {
     @ManyToOne(fetch = LAZY)
     private Member member;
-
     @ManyToOne(fetch = LAZY)
     private Product book;
-
 }

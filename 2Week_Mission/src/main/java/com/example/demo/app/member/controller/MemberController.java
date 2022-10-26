@@ -43,9 +43,11 @@ public class MemberController {
     @GetMapping("/login")
     public String showLogin(HttpServletRequest request) {
         String uri = request.getHeader("Referer");
+
         if (uri != null && !uri.contains("/member/login")) {
             request.getSession().setAttribute("prevPage", uri);
         }
+
         return "member/login";
     }
 
@@ -75,23 +77,23 @@ public class MemberController {
     public String editModifyProfile(@AuthenticationPrincipal MemberContext memberContext, @Valid PostProfileReq modifyFrom, HttpSession httpSession) {
         Optional<Member> member = memberService.findByUserId(memberContext.getId());
         memberService.modifyProfile(member.get(),modifyFrom.getEmail(),modifyFrom.getNickname());
-        httpSession.invalidate();
+        httpSession.invalidate();// 회원정보 수정시 다시 로그인 하게 세션 초기화
         return "redirect:/member/login?msg=" + Ut.url.encode("프로필을 수정했습니다.");
     }
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/findUsername")
-    public String showFindUsername(@AuthenticationPrincipal MemberContext memberContext, Model model) {
-        return "member/findUsername";
-    }
+    public String showFindUsername(@AuthenticationPrincipal MemberContext memberContext, Model model) {return "member/findUsername";}
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/findUsername")
     public String postFindUsername(Model model,@Valid PostFindUserNameReq findUserNameReq) {
         Optional<Member> member = memberService.findByEmail(findUserNameReq.getEmail());
+
         if(member.isEmpty()){
             return "redirect:/member/findUsername?msg=" + Ut.url.encode("해당 이메일로 가입된 계정은 없습니다.");
         }
+
         return "redirect:/member/findUsername?msg=" + Ut.url.encode("해당 이메일로 가입된 아이디는 "+member.get().getUsername()+" 입니다.");
     }
 
@@ -99,9 +101,11 @@ public class MemberController {
     @ResponseBody
     public String nicknameCheck(String username){
         Optional<Member> users_ = memberService.findByUsername(username);
+
         if (!users_.isPresent()){
             return "사용 가능한 아이디입니다.";
         }
+
         return "닉네임이 중복 되었습니다.";
     }
 
@@ -109,9 +113,11 @@ public class MemberController {
     @ResponseBody
     public String emailCheck(String email){
         Optional<Member> users_ = memberService.findByEmail(email);
+
         if (!users_.isPresent()){
             return "사용 가능한 이메일입니다.";
         }
+
         return "이메일이 중복 되었습니다.";
     }
 

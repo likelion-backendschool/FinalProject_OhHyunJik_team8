@@ -30,8 +30,7 @@ public class PostController {
     private final HashTagService hashTagService;
 
     @GetMapping("/list")
-    public String showList(Model model, @RequestParam(value = "kw", defaultValue = "") String kw
-            , @RequestParam(defaultValue = "keyword") String kwType) {
+    public String showList(Model model, @RequestParam(value = "kw", defaultValue = "") String kw, @RequestParam(defaultValue = "keyword") String kwType) {
         List<Post> posts = postService.getPosts(kwType,kw);
         postService.loadForPrintData(posts);
         model.addAttribute("posts", posts);
@@ -69,22 +68,22 @@ public class PostController {
 
 
     @GetMapping("/{id}/delete")
-    public String deleteDetail(Model model, @PathVariable Long id) {
+    public String deleteDetail(@PathVariable Long id) {
         postService.delete(id);
         return "redirect:/post/list";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/modify")
-    public String modify(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id,
-                         @Valid PostWriteReq articleForm) {
+    public String modify(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id, @Valid PostWriteReq articleForm) {
         Post post = postService.getForPrintPostById(id);
+
         if (memberContext.memberIsNot(post.getAuthor())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
+
         postService.modify(post, articleForm.getSubject(), articleForm.getContent());
         String msg = Ut.url.encode("%d번 게시물이 수정되었습니다.".formatted(id));
         return "redirect:/post/%d?msg=%s".formatted(id, msg);
     }
-
 }

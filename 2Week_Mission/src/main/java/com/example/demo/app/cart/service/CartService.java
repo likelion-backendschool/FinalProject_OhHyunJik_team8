@@ -20,34 +20,35 @@ public class CartService {
     @Transactional
     public CartItem addItem(Member buyer, Product product) {
         CartItem oldCartItem = cartItemRepository.findByBuyerIdAndProductId(buyer.getId(), product.getId()).orElse(null);
+
         if (oldCartItem != null) {
             return oldCartItem;
         }
+
         CartItem cartItem = CartItem.builder()
                 .buyer(buyer)
                 .product(product)
                 .build();
         cartItemRepository.save(cartItem);
+
         return cartItem;
     }
 
     @Transactional
     public boolean removeItem(Member buyer, Product product) {
         CartItem oldCartItem = cartItemRepository.findByBuyerIdAndProductId(buyer.getId(), product.getId()).orElse(null);
+
         if (oldCartItem != null) {
             cartItemRepository.delete(oldCartItem);
             return true;
         }
+
         return false;
     }
 
-    public boolean hasItem(Member buyer, Product product) {
-        return cartItemRepository.existsByBuyerIdAndProductId(buyer.getId(), product.getId());
-    }
+    public boolean hasItem(Member buyer, Product product) {return cartItemRepository.existsByBuyerIdAndProductId(buyer.getId(), product.getId());}
 
-    public List<CartItem> getItemsByBuyer(Member buyer) {
-        return cartItemRepository.findAllByBuyerId(buyer.getId());
-    }
+    public List<CartItem> getItemsByBuyer(Member buyer) {return cartItemRepository.findAllByBuyerId(buyer.getId());}
 
     @Transactional
     public void removeItem(CartItem cartItem) {
@@ -55,10 +56,7 @@ public class CartService {
     }
 
     @Transactional
-    public void removeItem(
-            Member buyer,
-            Long productId
-    ) {
+    public void removeItem(Member buyer, Long productId) {
         Product product = new Product(productId);
         removeItem(buyer, product);
     }
@@ -67,7 +65,5 @@ public class CartService {
         return cartItemRepository.findById(id);
     }
 
-    public boolean actorCanDelete(Member buyer, CartItem cartItem) {
-        return buyer.getId().equals(cartItem.getBuyer().getId());
-    }
+    public boolean actorCanDelete(Member buyer, CartItem cartItem) {return buyer.getId().equals(cartItem.getBuyer().getId());}
 }

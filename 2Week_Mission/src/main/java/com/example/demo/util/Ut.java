@@ -21,7 +21,6 @@ public class Ut {
 
     public static class json {
 
-
         // map 을 json 으로 바꿔주고
         public static Object toStr(Map<String, Object> map) {
             try {
@@ -45,16 +44,13 @@ public class Ut {
 
     public static <K, V> Map<K, V> mapOf(Object... args) {
         Map<K, V> map = new LinkedHashMap<>();
-
         int size = args.length / 2;
 
         for (int i = 0; i < size; i++) {
             int keyIndex = i * 2;
             int valueIndex = keyIndex + 1;
-
             K key = (K) args[keyIndex];
             V value = (V) args[valueIndex];
-
             map.put(key, value);
         }
 
@@ -62,18 +58,14 @@ public class Ut {
     }
 
     public static class spring {
-
         public static <T> ResponseEntity<RsData> responseEntityOf(RsData<T> rsData) {
             return responseEntityOf(rsData, null);
         }
-
         public static <T> ResponseEntity<RsData> responseEntityOf(RsData<T> rsData, HttpHeaders headers) {
             return new ResponseEntity<>(rsData, headers, rsData.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
         }
-
         public static HttpHeaders httpHeadersOf(String... args) {
             HttpHeaders headers = new HttpHeaders();
-
             Map<String, String> map = Ut.mapOf(args);
 
             for (String key : map.keySet()) {
@@ -97,19 +89,18 @@ public class Ut {
             }
 
             url += paramName + "=" + encode(paramValue);
-
             return url;
         }
 
         public static String modifyQueryParam(String url, String paramName, String paramValue) {
             url = deleteQueryParam(url, paramName);
             url = addQueryParam(url, paramName, paramValue);
-
             return url;
         }
 
         private static String deleteQueryParam(String url, String paramName) {
             int startPoint = url.indexOf(paramName + "=");
+
             if (startPoint == -1) return url;
 
             int endPoint = url.substring(startPoint).indexOf("&");
@@ -119,7 +110,6 @@ public class Ut {
             }
 
             String urlAfter = url.substring(startPoint + endPoint + 1);
-
             return url.substring(0, startPoint) + urlAfter;
         }
 

@@ -38,7 +38,6 @@ public class Order extends BaseEntity {
 
     public void addOrderItem(OrderItem orderItem) {
         orderItem.setOrder(this);
-
         orderItems.add(orderItem);
     }
 
@@ -70,6 +69,7 @@ public class Order extends BaseEntity {
 
     public int getPayPrice() {
         int payPrice = 0;
+
         for (OrderItem orderItem : orderItems) {
             payPrice += orderItem.getPayPrice();
         }
@@ -90,7 +90,6 @@ public class Order extends BaseEntity {
     public boolean isPayable() {
         if ( isPaid ) return false;
         if ( isCanceled ) return false;
-
         return true;
     }
 }

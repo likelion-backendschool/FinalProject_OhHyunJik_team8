@@ -41,9 +41,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public String showDetail(Model model, @PathVariable Long id) {
         Optional<Product> product = productService.productById(id);
+
         if(product.isEmpty()){
             return "redirect:/product/list?msg=" + Ut.url.encode("잘못된 상품 접근");
         }
+
         model.addAttribute("product",product.get());
         return "product/detail";
     }

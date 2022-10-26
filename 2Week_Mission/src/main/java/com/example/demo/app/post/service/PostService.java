@@ -21,7 +21,6 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PostService {
-
     private final PostRepository postRepository;
     private final HashTagService hashTagService;
 
@@ -73,12 +72,14 @@ public class PostService {
     public List<Post> getPosts(String keyType, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
+
         if (kw == null || kw.trim().length() == 0) {
             return postRepository.findAll();
         }
         if (keyType.equals("keyword")) {
             return  postRepository.findByHashTagContains(kw);
         }
+
         return postRepository.findAll();
     }
 

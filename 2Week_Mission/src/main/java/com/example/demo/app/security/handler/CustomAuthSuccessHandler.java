@@ -58,9 +58,7 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         }
 
         MemberContext memberContext = (MemberContext) authentication.getPrincipal();
-
         url = Ut.url.modifyQueryParam(url, "msg", memberContext.getName() + "님 환영합니다.");
-
         redirectStrategy.sendRedirect(request, response, url);
     }
 

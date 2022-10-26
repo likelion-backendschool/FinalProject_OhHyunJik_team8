@@ -21,4 +21,4 @@ logging:
 custom:
   site:
     name: TIGERSHRIMP
-    baseUrl: "http://localhost:900"
+    baseUrl: "http://localhost:9000"
