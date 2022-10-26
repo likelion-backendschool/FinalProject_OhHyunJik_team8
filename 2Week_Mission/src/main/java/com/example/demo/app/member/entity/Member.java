@@ -30,4 +30,11 @@ public class Member extends BaseEntity {
     public Member(long id) {
         super(id);
     }
+    public void updateInfo(String email,String nickname){
+        this.email = email;
+        this.nickname = nickname;
+    }
+    public void updateRestCash(long restCash){
+        this.restCash = restCash;
+    }
 }

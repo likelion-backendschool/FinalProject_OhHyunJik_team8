@@ -65,5 +65,8 @@ public class Post extends BaseEntity {
                 .sorted()
                 .collect(Collectors.joining(" "));
     }
-
+    public void updatePost(String subject, String content){
+        this.subject = subject;
+        this.content = content;
+    }
 }

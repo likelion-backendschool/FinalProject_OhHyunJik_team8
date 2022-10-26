@@ -98,8 +98,7 @@ public class PostService {
     }
 
     public void modify(Post post, String subject, String content) {
-        post.setSubject(subject);
-        post.setContent(content);
+        post.updatePost(subject,content);
         postRepository.save(post);
     }
 

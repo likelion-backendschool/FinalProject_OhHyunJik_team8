@@ -68,8 +68,7 @@ public class MemberService {
     }
 
     public void modifyProfile(Member member,String email, String nickname) {
-        member.setEmail(email);
-        member.setNickname(nickname);
+        member.updateInfo(email,nickname);
         memberRepository.save(member);
     }
 
@@ -88,7 +87,7 @@ public class MemberService {
         CashLog cashLog = cashService.addCash(member, price, eventType);
         Optional<Member> updateMember = findByUserId(member.getId());
         long newRestCash = updateMember.get().getRestCash() + cashLog.getPrice();
-        member.setRestCash(newRestCash);
+        member.updateRestCash(newRestCash);
         memberRepository.save(member);
 
         return RsData.of(
