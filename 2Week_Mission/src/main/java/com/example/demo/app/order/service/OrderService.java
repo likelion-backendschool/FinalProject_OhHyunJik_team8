@@ -144,4 +144,10 @@ public class OrderService {
         List<Order> orderList = orderRepository.findAllByBuyerId(buyer.getId());
         return orderList;
     }
+
+    @Transactional
+    public void delete(Long id) {
+        orderItemRepository.deleteAllByOrderId(id);
+        orderRepository.deleteById(id);
+    }
 }

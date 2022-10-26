@@ -23,6 +23,10 @@
                 <a th:if="${order.isPaid}and!${order.isRefunded}" th:text="|결제상태 : 결제완료|">
                 </a>
             </a>
+            <a>
+                <a th:href="@{|/order/${order.id}/cancel|}" th:if="!${order.isPaid}and!${order.isRefunded}" th:text="취소가능">
+                </a>
+            </a>
 
 <!--            <a th:href="@{|/product/${product.id}|}" th:text="|작성자 : ${product.seller.username}|">-->
 <!--            </a>-->
