@@ -3,6 +3,7 @@ package com.example.demo.app.base.initData;
 
 
 import com.example.demo.app.cart.service.CartService;
+import com.example.demo.app.cash.service.CashService;
 import com.example.demo.app.keyword.entity.Keyword;
 import com.example.demo.app.keyword.service.KeywordService;
 import com.example.demo.app.member.entity.Member;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface InitDataBefore {
-    default void before(MemberService memberService, PostService postService, ProductService productService, KeywordService keywordService, CartService cartService){
+    default void before(MemberService memberService, PostService postService, ProductService productService, KeywordService keywordService, CartService cartService, CashService cashService){
         List<String> keyword1 = new ArrayList<>();
         List<String> keyword2 = new ArrayList<>();
         keyword1.add("키워드1");

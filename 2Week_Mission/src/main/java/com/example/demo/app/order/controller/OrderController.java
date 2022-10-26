@@ -25,6 +25,9 @@ import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -175,4 +178,19 @@ public class OrderController {
         return  "redirect:/order/lists" + "?msg=" + Ut.url.encode("미 결제 주문이 삭제되었습니다.");
     }
 
+    @GetMapping("/{id}/refund")
+    @PreAuthorize("isAuthenticated()")
+    public String refundOrder(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id) {
+        Optional<Order> order = orderService.findForPrintById(id);
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(order.get().getModifyDate(), now);
+        long duration_s = duration.getSeconds();
+
+        if(duration_s>=60){
+            return  "redirect:/order/lists" + "?msg=" + Ut.url.encode("해당 건은 환불이 불가능합니다.");
+        }
+
+        orderService.refund(order.get());
+        return  "redirect:/order/lists" + "?msg=" + Ut.url.encode("해당건을 환불 하시겠습니까??");
+    }
 }
