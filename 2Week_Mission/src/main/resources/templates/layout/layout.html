@@ -444,6 +444,18 @@
                     글 리스트
                 </span>
             </a>
+            <a href="/cart/lists" class="inline-flex" sec:authorize="isAuthenticated()">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span class="ml-[2px] hidden sm:block">
+                    장바구니
+                </span>
+            </a>
+            <a href="/order/lists" class="inline-flex" sec:authorize="isAuthenticated()">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span class="ml-[2px] hidden sm:block">
+                    주문목록
+                </span>
+            </a>
             <a href="/member/login" class="inline-flex" sec:authorize="isAnonymous()">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i>
                 <span class="ml-[2px] hidden sm:block">
