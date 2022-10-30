@@ -37,10 +37,19 @@ public interface InitDataBefore {
         Keyword productTag1 = keywordService.getKeyWordByContent("키워드1");
         Keyword productTag2 = keywordService.getKeyWordByContent("키워드4");
 
+        Keyword productTag3 = keywordService.getKeyWordByContent("키워드2");
+        Keyword productTag4 = keywordService.getKeyWordByContent("키워드1");
+
         Product product1 =productService.create(member2,"상품1",5000,productTag1);
         Product product2 =productService.create(member1,"상품2",10000,productTag2);
 
+        Product product3 =productService.create(member2,"상품3",5000,productTag3);
+        Product product4 =productService.create(member1,"상품4",100000,productTag4);
+
+
         cartService.addItem(member2, product1);
         cartService.addItem(member2, product2);
+        cartService.addItem(member1, product4);
+        cartService.addItem(member2, product3);
     }
 }
