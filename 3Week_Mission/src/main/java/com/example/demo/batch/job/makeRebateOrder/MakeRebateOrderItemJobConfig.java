@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -37,6 +38,8 @@ public class MakeRebateOrderItemJobConfig {
     private final StepBuilderFactory stepBuilderFactory;
     private final OrderItemRepository orderItemRepository;
     private final RebateOrderItemRepository rebateOrderItemRepository;
+
+
     @Bean
     public Job makeRebateOrderItemJob(Step makeRebateOrderItemStep1, CommandLineRunner initData) throws Exception {
         initData.run();
@@ -62,9 +65,8 @@ public class MakeRebateOrderItemJobConfig {
 
     @StepScope
     @Bean
-    public RepositoryItemReader<OrderItem> orderItemReader(
-            @Value("#{jobParameters['month']}") String yearMonth
-    ) {
+    public RepositoryItemReader<OrderItem> orderItemReader() {
+        String yearMonth= LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM"));
         int monthEndDay = Ut.date.getEndDayOf(yearMonth);
         LocalDateTime fromDate = Ut.date.parse(yearMonth + "-01 00:00:00.000000");
         LocalDateTime toDate = Ut.date.parse(yearMonth + "-%02d 23:59:59.999999".formatted(monthEndDay));
