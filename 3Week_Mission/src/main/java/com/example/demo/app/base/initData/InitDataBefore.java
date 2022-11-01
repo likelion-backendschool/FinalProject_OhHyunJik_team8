@@ -21,6 +21,7 @@ import java.util.List;
 
 public interface InitDataBefore {
     default void before(MemberService memberService, PostService postService, ProductService productService, KeywordService keywordService, CartService cartService, CashService cashService, OrderService orderService){
+
         class Helper {
             public Order order(Member member, List<Product> products) {
                 for (int i = 0; i < products.size(); i++) {
@@ -34,6 +35,10 @@ public interface InitDataBefore {
         }
         Helper helper = new Helper();
 
+        Member member1 = memberService.join("user1", "1234", "user1@test.com","");
+        Member member2 = memberService.join("user2", "1234", "user2@test.com","user2");
+        Member member3 = memberService.join("user3", "1234", "user3@test.com",null);
+
         List<String> keyword1 = new ArrayList<>();
         List<String> keyword2 = new ArrayList<>();
         keyword1.add("키워드1");
@@ -43,9 +48,6 @@ public interface InitDataBefore {
         keyword2.add("키워드4");
         keyword2.add("키워드5");
 
-        Member member1 = memberService.join("user1", "1234", "user1@test.com","");
-        Member member2 = memberService.join("user2", "1234", "user2@test.com","user2");
-        Member member3 = memberService.join("user3", "1234", "user3@test.com",null);
 
         Post post1 = postService.write(member1,"제목 1" ,"- 내용1",keyword1);
         Post post2 = postService.write(member1,"제목 2" ,"- 내용3",keyword2);

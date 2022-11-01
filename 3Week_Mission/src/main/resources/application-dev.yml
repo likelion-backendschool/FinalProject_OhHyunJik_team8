@@ -1,6 +1,12 @@
 server:
   port: 9000
 spring:
+  batch:
+    job:
+      names: ${job.name:NONE}
+      enabled: false #Batch 자동실행 방지
+    jdbc:
+      initialize-schema: ALWAYS
   thymeleaf:
     cache: false
     prefix: file:src/main/resources/templates/

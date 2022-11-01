@@ -1,6 +1,8 @@
 package com.example.demo.app.order.repository;
 
 import com.example.demo.app.order.entity.OrderItem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -13,4 +15,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     void deleteByOrderId(Long id);
 
     void deleteAllByOrderId(Long id);
+
+    Page<OrderItem> findAllByPayDateBetween(LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable);
 }
