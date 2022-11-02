@@ -13,7 +13,6 @@ import java.util.List;
 
 
 @Getter
-@Setter
 public class MemberContext extends User {
     private final Long id;
     private final LocalDateTime createDate;

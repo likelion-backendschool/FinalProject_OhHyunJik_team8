@@ -41,7 +41,8 @@ public class MakeRebateOrderItemJobConfig {
 
 
     @Bean
-    public Job makeRebateOrderItemJob(Step makeRebateOrderItemStep1, CommandLineRunner initData) throws Exception {
+    public Job makeRebateOrderItemJob(Step makeRebateOrderItemStep1,
+                                      CommandLineRunner initData) throws Exception {
         initData.run();
         return jobBuilderFactory.get("makeRebateOrderItemJob")
                 .incrementer(new RunIdIncrementer()) // 강제로 매번 다른 ID를 실행시에 파라미터로 부여

@@ -12,7 +12,6 @@ import com.example.demo.app.security.dto.MemberContext;
 import com.example.demo.util.Ut;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -24,7 +23,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
-
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -45,7 +43,8 @@ public class OrderController {
 
     @PostMapping("/{id}/payByRestCashOnly")
     @PreAuthorize("isAuthenticated()")
-    public String payByRestCashOnly(@AuthenticationPrincipal MemberContext memberContext, @PathVariable long id) {
+    public String payByRestCashOnly(@AuthenticationPrincipal MemberContext memberContext,
+                                    @PathVariable long id) {
         Order order = orderService.findForPrintById(id).get();
 
         Member actor = memberContext.getMember();
@@ -63,7 +62,9 @@ public class OrderController {
 
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String showDetail(@AuthenticationPrincipal MemberContext memberContext, @PathVariable long id, Model model) {
+    public String showDetail(@AuthenticationPrincipal MemberContext memberContext,
+                             @PathVariable long id,
+                             Model model) {
         Order order = orderService.findForPrintById(id).get();
 
         Member actor = memberContext.getMember();
@@ -150,7 +151,9 @@ public class OrderController {
     }
 
     @RequestMapping("/{id}/fail")
-    public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
+    public String failPayment(@RequestParam String message,
+                              @RequestParam String code,
+                              Model model) {
         model.addAttribute("message", message);
         model.addAttribute("code", code);
         return "order/fail";
@@ -168,7 +171,8 @@ public class OrderController {
 
     @GetMapping("/lists")
     @PreAuthorize("isAuthenticated()")
-    public String showLists(@AuthenticationPrincipal MemberContext memberContext, Model model) {
+    public String showLists(@AuthenticationPrincipal MemberContext memberContext,
+                            Model model) {
         Member buyer = memberContext.getMember();
         List<Order> orderList = orderService.getOrders(buyer);
         model.addAttribute("orderList", orderList);
@@ -177,14 +181,16 @@ public class OrderController {
 
     @GetMapping("/{id}/cancel")
     @PreAuthorize("isAuthenticated()")
-    public String deleteOrder(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id) {
+    public String deleteOrder(@AuthenticationPrincipal MemberContext memberContext,
+                              @PathVariable Long id) {
         orderService.delete(id);
         return  "redirect:/order/lists" + "?msg=" + Ut.url.encode("미 결제 주문이 삭제되었습니다.");
     }
 
     @GetMapping("/{id}/refund")
     @PreAuthorize("isAuthenticated()")
-    public String refundOrder(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id) {
+    public String refundOrder(@AuthenticationPrincipal MemberContext memberContext,
+                              @PathVariable Long id) {
         Optional<Order> order = orderService.findForPrintById(id);
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(order.get().getModifyDate(), now);

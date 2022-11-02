@@ -39,7 +39,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public String showDetail(Model model, @PathVariable Long id) {
+    public String showDetail(Model model,
+                             @PathVariable Long id) {
         Optional<Product> product = productService.productById(id);
 
         if(product.isEmpty()){
@@ -60,7 +61,8 @@ public class ProductController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
-    public String PostWrite(@AuthenticationPrincipal MemberContext memberContext, @Valid PostProductReq postProductReq) {
+    public String PostWrite(@AuthenticationPrincipal MemberContext memberContext,
+                            @Valid PostProductReq postProductReq) {
         Keyword keyword = keywordService.getKeyWordByContent(postProductReq.getKeyword());
         Optional<Member> member = memberService.findByUserId(memberContext.getId());
         Product product = productService.create(member.get(),postProductReq.getSubject(),postProductReq.getPrice(),keyword);

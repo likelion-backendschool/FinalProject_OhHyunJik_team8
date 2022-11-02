@@ -42,14 +42,8 @@ public class AdmWithDrawController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String rebateOne(@PathVariable long id, HttpServletRequest req) {
         RsData rebateRsData = withDrawService.complete(id);
-
-        String referer = req.getHeader("Referer");
-        String yearMonth = Ut.url.getQueryParamValue(referer, "yearMonth", "");
-
         String redirect = "redirect:/adm/withdraw/applyList";
-
         redirect = rebateRsData.addMsgToUrl(redirect);
-
         return redirect;
     }
 }

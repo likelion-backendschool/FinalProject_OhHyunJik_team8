@@ -29,7 +29,9 @@ public class HashTagService {
         List<HashTag> needToDelete = new ArrayList<>();
 
         for (HashTag oldHashTag : oldHashTags) {
-            boolean contains = keywordContents.stream().anyMatch(s -> s.equals(oldHashTag.getKeyword().getContent()));
+            boolean contains = keywordContents.stream()
+                    .anyMatch(s -> s.equals(oldHashTag.getKeyword()
+                            .getContent()));
             if (contains == false) {
                 needToDelete.add(oldHashTag);
             }

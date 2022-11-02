@@ -33,9 +33,9 @@ public class WithDrawController {
 
     @GetMapping("/apply")
     @PreAuthorize("isAuthenticated()")
-    public String showApply(@AuthenticationPrincipal MemberContext memberContext, Model model) {
+    public String showApply(@AuthenticationPrincipal MemberContext memberContext,
+                            Model model) {
         Member member = memberContext.getMember();
-
         long restCash = memberService.getRestCash(member);
         model.addAttribute("actorRestCash", restCash);
         return "withdraw/apply";
@@ -43,9 +43,9 @@ public class WithDrawController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/apply")
-    public String postApply(@AuthenticationPrincipal MemberContext memberContext, @Valid PostWithDrawReq postWithDrawReq) {
+    public String postApply(@AuthenticationPrincipal MemberContext memberContext,
+                            @Valid PostWithDrawReq postWithDrawReq) {
         Member member = memberContext.getMember();
-
         WithDraw withDraw = withDrawService.create(postWithDrawReq,member);
         String msg = "%d번 출금신청서 작성하였습니다.".formatted(withDraw.getId());
         msg = Ut.url.encode(msg);

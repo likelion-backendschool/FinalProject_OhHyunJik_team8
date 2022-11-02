@@ -46,9 +46,13 @@ public class CartService {
         return false;
     }
 
-    public boolean hasItem(Member buyer, Product product) {return cartItemRepository.existsByBuyerIdAndProductId(buyer.getId(), product.getId());}
+    public boolean hasItem(Member buyer, Product product) {
+        return cartItemRepository.existsByBuyerIdAndProductId(buyer.getId(), product.getId());
+    }
 
-    public List<CartItem> getItemsByBuyer(Member buyer) {return cartItemRepository.findAllByBuyerId(buyer.getId());}
+    public List<CartItem> getItemsByBuyer(Member buyer) {
+        return cartItemRepository.findAllByBuyerId(buyer.getId());
+    }
 
     @Transactional
     public void removeItem(CartItem cartItem) {
@@ -65,5 +69,7 @@ public class CartService {
         return cartItemRepository.findById(id);
     }
 
-    public boolean actorCanDelete(Member buyer, CartItem cartItem) {return buyer.getId().equals(cartItem.getBuyer().getId());}
+    public boolean actorCanDelete(Member buyer, CartItem cartItem) {
+        return buyer.getId().equals(cartItem.getBuyer().getId());
+    }
 }

@@ -35,9 +35,7 @@ public class AdmRebateController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String makeData(String yearMonth) {
         RsData makeDateRsData = rebateService.makeDate(yearMonth);
-
         String redirect = makeDateRsData.addMsgToUrl("redirect:/adm/rebate/rebateOrderItemList?yearMonth=" + yearMonth);
-
         return redirect;
     }
 
@@ -49,24 +47,19 @@ public class AdmRebateController {
         }
 
         List<RebateOrderItem> items = rebateService.findRebateOrderItemsByPayDateIn(yearMonth);
-
         model.addAttribute("items", items);
-
         return "adm/rebate/rebateOrderItemList";
     }
 
     @PostMapping("/rebateOne/{orderItemId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String rebateOne(@PathVariable long orderItemId, HttpServletRequest req) {
+    public String rebateOne(@PathVariable long orderItemId,
+                            HttpServletRequest req) {
         RsData rebateRsData = rebateService.rebate(orderItemId);
-
         String referer = req.getHeader("Referer");
         String yearMonth = Ut.url.getQueryParamValue(referer, "yearMonth", "");
-
         String redirect = "redirect:/adm/rebate/rebateOrderItemList?yearMonth=" + yearMonth;
-
         redirect = rebateRsData.addMsgToUrl(redirect);
-
         return redirect;
     }
 

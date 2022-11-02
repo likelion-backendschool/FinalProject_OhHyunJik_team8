@@ -38,7 +38,11 @@ public class CashController {
     private String SECRET_KEY;
 
     @RequestMapping("/charge")
-    public String chargeCash(@RequestParam String paymentKey, @RequestParam Long amount, @RequestParam String orderId, Model model, @AuthenticationPrincipal MemberContext memberContext) throws Exception {
+    public String chargeCash(@RequestParam String paymentKey,
+                             @RequestParam Long amount,
+                             @RequestParam String orderId,
+                             Model model,
+                             @AuthenticationPrincipal MemberContext memberContext) throws Exception {
         long orderIdInputed = Long.parseLong(orderId.split("__")[0]);
         HttpHeaders headers = new HttpHeaders();
         // headers.setBasicAuth(SECRET_KEY, ""); // spring framework 5.2 이상 버전에서 지원
@@ -65,7 +69,8 @@ public class CashController {
     }
 
     @RequestMapping("/charge/fail")
-    public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
+    public String failPayment(@RequestParam String message,
+                              @RequestParam String code, Model model) {
         model.addAttribute("message", message);
         model.addAttribute("code", code);
         return "order/fail";

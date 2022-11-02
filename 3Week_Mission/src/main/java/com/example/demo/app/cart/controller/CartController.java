@@ -30,7 +30,8 @@ public class CartController {
 
     @GetMapping("/lists")
     @PreAuthorize("isAuthenticated()")
-    public String showItems(@AuthenticationPrincipal MemberContext memberContext, Model model) {
+    public String showItems(@AuthenticationPrincipal MemberContext memberContext,
+                            Model model) {
         Member buyer = memberContext.getMember();
         List<CartItem> items = cartService.getItemsByBuyer(buyer);
         model.addAttribute("items", items);
@@ -39,7 +40,8 @@ public class CartController {
 
     @PostMapping("/removeItems")
     @PreAuthorize("isAuthenticated()")
-    public String removeItems(@AuthenticationPrincipal MemberContext memberContext, String ids) {
+    public String removeItems(@AuthenticationPrincipal MemberContext memberContext,
+                              String ids) {
         Member buyer = memberContext.getMember();
         String[] idsArr = ids.split(",");
 
@@ -58,7 +60,8 @@ public class CartController {
 
     @GetMapping("/add/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String addItems(@AuthenticationPrincipal MemberContext memberContext,@PathVariable Long id) {
+    public String addItems(@AuthenticationPrincipal MemberContext memberContext,
+                           @PathVariable Long id) {
         Member buyer = memberContext.getMember();
         Optional<Product> product = productService.productById(id);
         cartService.addItem(buyer,product.get());

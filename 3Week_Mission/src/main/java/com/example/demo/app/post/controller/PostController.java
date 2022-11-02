@@ -30,7 +30,9 @@ public class PostController {
     private final HashTagService hashTagService;
 
     @GetMapping("/list")
-    public String showList(Model model, @RequestParam(value = "kw", defaultValue = "") String kw, @RequestParam(defaultValue = "keyword") String kwType) {
+    public String showList(Model model,
+                           @RequestParam(value = "kw", defaultValue = "") String kw,
+                           @RequestParam(defaultValue = "keyword") String kwType) {
         List<Post> posts = postService.getPosts(kwType,kw);
         postService.loadForPrintData(posts);
         model.addAttribute("posts", posts);
@@ -45,7 +47,9 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
-    public String postWrite(@AuthenticationPrincipal MemberContext memberContext, @Valid PostWriteReq postWriteReq, @RequestParam(value = "tag", required = false) List<String> tags) {
+    public String postWrite(@AuthenticationPrincipal MemberContext memberContext,
+                            @Valid PostWriteReq postWriteReq,
+                            @RequestParam(value = "tag", required = false) List<String> tags) {
         Post post = postService.write(memberContext.getId(), postWriteReq.getSubject(), postWriteReq.getContent(), tags);
         String msg = "%d번 게시물이 작성되었습니다.".formatted(post.getId());
         msg = Ut.url.encode(msg);
@@ -53,14 +57,16 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public String showDetail(Model model, @PathVariable Long id) {
+    public String showDetail(Model model,
+                             @PathVariable Long id) {
         Post post = postService.getForPrintPostById(id);
         model.addAttribute("post", post);
         return "post/detail";
     }
 
     @GetMapping("/{id}/modify")
-    public String showModify(Model model, @PathVariable Long id) {
+    public String showModify(Model model,
+                             @PathVariable Long id) {
         Post post = postService.getForPrintPostById(id);
         model.addAttribute("post", post);
         return "post/modify";
@@ -75,7 +81,9 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}/modify")
-    public String modify(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long id, @Valid PostWriteReq articleForm) {
+    public String modify(@AuthenticationPrincipal MemberContext memberContext,
+                         @PathVariable Long id,
+                         @Valid PostWriteReq articleForm) {
         Post post = postService.getForPrintPostById(id);
 
         if (memberContext.memberIsNot(post.getAuthor())) {

@@ -60,21 +60,25 @@ public class MemberController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public String showProfile(@AuthenticationPrincipal MemberContext memberContext, Model model) {
+    public String showProfile(@AuthenticationPrincipal MemberContext memberContext,
+                              Model model) {
         model.addAttribute("model",memberContext);
         return "member/profile";
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify")
-    public String showModifyProfile(@AuthenticationPrincipal MemberContext memberContext, Model model) {
+    public String showModifyProfile(@AuthenticationPrincipal MemberContext memberContext,
+                                    Model model) {
         model.addAttribute("member",memberContext);
         return "member/modify";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify")
-    public String editModifyProfile(@AuthenticationPrincipal MemberContext memberContext, @Valid PostProfileReq modifyFrom, HttpSession httpSession) {
+    public String editModifyProfile(@AuthenticationPrincipal MemberContext memberContext,
+                                    @Valid PostProfileReq modifyFrom,
+                                    HttpSession httpSession) {
         Optional<Member> member = memberService.findByUserId(memberContext.getId());
         memberService.modifyProfile(member.get(),modifyFrom.getEmail(),modifyFrom.getNickname());
         httpSession.invalidate();// 회원정보 수정시 다시 로그인 하게 세션 초기화
@@ -83,17 +87,19 @@ public class MemberController {
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/findUsername")
-    public String showFindUsername(@AuthenticationPrincipal MemberContext memberContext, Model model) {return "member/findUsername";}
+    public String showFindUsername(@AuthenticationPrincipal MemberContext memberContext,
+                                   Model model) {
+        return "member/findUsername";
+    }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/findUsername")
-    public String postFindUsername(Model model,@Valid PostFindUserNameReq findUserNameReq) {
+    public String postFindUsername(Model model,
+                                   @Valid PostFindUserNameReq findUserNameReq) {
         Optional<Member> member = memberService.findByEmail(findUserNameReq.getEmail());
-
         if(member.isEmpty()){
             return "redirect:/member/findUsername?msg=" + Ut.url.encode("해당 이메일로 가입된 계정은 없습니다.");
         }
-
         return "redirect:/member/findUsername?msg=" + Ut.url.encode("해당 이메일로 가입된 아이디는 "+member.get().getUsername()+" 입니다.");
     }
 

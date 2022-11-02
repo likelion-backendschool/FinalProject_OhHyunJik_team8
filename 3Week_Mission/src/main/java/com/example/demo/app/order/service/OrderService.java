@@ -125,7 +125,9 @@ public class OrderService {
 
     public boolean actorCanPayment(Member actor, Order order) {return actorCanSee(actor, order);}
 
-    public List<OrderItem> findAllByPayDateBetweenOrderByIdAsc(LocalDateTime fromDate, LocalDateTime toDate) {return orderItemRepository.findAllByPayDateBetween(fromDate, toDate);}
+    public List<OrderItem> findAllByPayDateBetweenOrderByIdAsc(LocalDateTime fromDate, LocalDateTime toDate) {
+        return orderItemRepository.findAllByPayDateBetween(fromDate, toDate);
+    }
 
     public List<Order> getOrders(Member buyer) {
         List<Order> orderList = orderRepository.findAllByBuyerId(buyer.getId());
