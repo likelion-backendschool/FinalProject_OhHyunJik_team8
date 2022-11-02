@@ -26,7 +26,7 @@ public class BatchScheduler {
     private final MakeRebateOrderItemJobConfig makeRebateOrderItemJobConfig;
     private final CommandLineRunner initData;
     private final Step makeRebateOrderItemStep1;
-    @Scheduled(cron = "0 0/32 * * * *")
+    @Scheduled(cron = "0 0 4 15 * *")
     public void runJob() {
 
         Map<String, JobParameter> confMap = new HashMap<>();
