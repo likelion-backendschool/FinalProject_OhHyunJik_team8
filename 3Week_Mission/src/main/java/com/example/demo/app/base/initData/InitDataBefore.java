@@ -14,13 +14,22 @@ import com.example.demo.app.post.entity.Post;
 import com.example.demo.app.post.service.PostService;
 import com.example.demo.app.product.entity.Product;
 import com.example.demo.app.product.service.ProductService;
+import com.example.demo.app.withdraw.dto.PostWithDrawReq;
+import com.example.demo.app.withdraw.service.WithDrawService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public interface InitDataBefore {
-    default void before(MemberService memberService, PostService postService, ProductService productService, KeywordService keywordService, CartService cartService, CashService cashService, OrderService orderService){
+    default void before(MemberService memberService,
+                        PostService postService,
+                        ProductService productService,
+                        KeywordService keywordService,
+                        CartService cartService,
+                        CashService cashService,
+                        OrderService orderService
+    , WithDrawService withDrawService){
 
         class Helper {
             public Order order(Member member, List<Product> products) {
@@ -105,5 +114,12 @@ public interface InitDataBefore {
         cartService.addItem(member2, product2);
         cartService.addItem(member1, product4);
         cartService.addItem(member2, product3);
+
+        PostWithDrawReq postWithDrawReq1 = new PostWithDrawReq("국민","123456",10000);
+        PostWithDrawReq postWithDrawReq2 = new PostWithDrawReq("신한","123456",10000);
+        PostWithDrawReq postWithDrawReq3= new PostWithDrawReq("하나","123451236",12000);
+        withDrawService.create(postWithDrawReq1,member3);
+        withDrawService.create(postWithDrawReq2,member2);
+        withDrawService.create(postWithDrawReq3,member2);
     }
 }

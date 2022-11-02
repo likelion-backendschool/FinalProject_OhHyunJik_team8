@@ -8,6 +8,7 @@ import com.example.demo.app.member.service.MemberService;
 import com.example.demo.app.order.service.OrderService;
 import com.example.demo.app.post.service.PostService;
 import com.example.demo.app.product.service.ProductService;
+import com.example.demo.app.withdraw.service.WithDrawService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -22,12 +23,26 @@ public class DevInitData implements InitDataBefore {
 
     @Bean
     CommandLineRunner initData(
-            MemberService memberService, PostService postService, ProductService productService, KeywordService keywordService, CartService cartService, CashService cashService, OrderService orderService) {
+            MemberService memberService,
+            PostService postService,
+            ProductService productService,
+            KeywordService keywordService,
+            CartService cartService,
+            CashService cashService,
+            OrderService orderService
+    , WithDrawService withDrawService) {
         return args -> {
             if (initDataDone) return;
 
             initDataDone = true;
-            before(memberService,postService,productService,keywordService,cartService, cashService,orderService);
+            before(memberService,
+                    postService,
+                    productService,
+                    keywordService,
+                    cartService,
+                    cashService,
+                    orderService
+            ,withDrawService);
         };
     }
 }
