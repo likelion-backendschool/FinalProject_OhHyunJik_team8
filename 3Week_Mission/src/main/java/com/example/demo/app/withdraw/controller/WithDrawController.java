@@ -47,9 +47,9 @@ public class WithDrawController {
         Member member = memberContext.getMember();
 
         WithDraw withDraw = withDrawService.create(postWithDrawReq,member);
-        String msg = "%d번 게시물이 작성되었습니다.".formatted(withDraw.getId());
+        String msg = "%d번 출금신청서 작성하였습니다.".formatted(withDraw.getId());
         msg = Ut.url.encode(msg);
-        return "redirect:/product/%d?msg=%s".formatted(withDraw.getId(), msg);
+        return "redirect:/?msg=%s".formatted(withDraw.getId(), msg);
     }
 
 }

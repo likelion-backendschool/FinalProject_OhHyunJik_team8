@@ -23,5 +23,10 @@ public class WithDraw extends BaseEntity {
     private String accountNumber;
     private long requestCash;
 
-    private String status;
+    private boolean isComplete;
+    private boolean isReject;
+
+    public void setComplete(boolean isComplete){
+        this.isComplete = isComplete;
+    }
 }
