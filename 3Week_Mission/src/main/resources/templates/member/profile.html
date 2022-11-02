@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>프로파일</title>
+</head>
+
+<body>
+<section layout:fragment="main">
+    <div class="container">
+        <h1>프로파일</h1>
+
+        <div>아이디 : <span th:text="${model.username}"></span></div>
+        <div>이메일 : <span th:text="${model.email}"></span></div>
+        <div th:if="${model.nickname}!=null">작가명 : <span th:text="${model.nickname}"></span>
+        </div>
+        <div th:if="${model.nickname}==null">
+            작가명 없음
+        </div>
+
+        <a th:href="@{/member/modify}" >회원정보 수정 </a>
+    </div>
+
+</section>
+</body>
+</html>

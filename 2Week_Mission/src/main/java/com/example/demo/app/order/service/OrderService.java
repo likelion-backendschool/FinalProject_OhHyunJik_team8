@@ -83,6 +83,9 @@ public class OrderService {
         memberService.addCash(buyer, payPrice * -1, "주문__%d__사용__예치금".formatted(order.getId()));
         order.setPaymentDone();
         orderRepository.save(order);
+        // 결제된 정보를 토대로 주문 품복들을 마이북 서비스 단으로 넘겨서 저장을 한다.
+        List<OrderItem> orderItems = order.getOrderItems();
+        myBookService.createMyBookList(buyer,orderItems);
     }
 
     @Transactional

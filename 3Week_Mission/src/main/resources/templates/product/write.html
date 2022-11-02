@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>상품생성</title>
+</head>
+
+
+<body>
+<main layout:fragment="main">
+    <section class="section section-login flex-grow flex flex-col items-center justify-center">
+        <h1>상품생성</h1>
+
+        <script>
+            function WriteForm__submit(form) {
+                form.subject.value = form.subject.value.trim();
+                if (form.subject.value.length == 0) {
+                    alert('상품명을 입력해주세요.');
+                    form.subject.focus();
+                    return;
+                }
+                form.price.value = form.price.value.trim();
+
+                form.submit();
+            }
+
+        </script>
+
+        <!--        enctype="multipart/form-data"-->
+        <form id="form" th:action="@{/product/write}" method="POST" onsubmit="WriteForm__submit(this); return false;">
+            <input type="hidden" name="content" placeholder="내용을 입력해주세요." />
+            <div>
+                <span>상품명</span>
+                <input type="text" name="subject">
+            </div>
+
+            <div>
+                <span>가격</span>
+                <input type="number" name="price">
+            </div>
+            <div>
+                <select name="keyword">
+                    <option th:each="key : ${keywords}" > [[${key.content}]]</option>
+                </select>
+            </div>
+
+
+            <div>
+                <span>상품</span>
+                <input type="submit" value="생성">
+            </div>
+
+        </form>
+    </div>
+    </section>
+
+</main>
+</body>
+</html>
+

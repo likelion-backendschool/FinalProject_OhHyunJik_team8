@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>출금신청</title>
+</head>
+
+<body>
+<main layout:fragment="main">
+    <section class="section section-login flex-grow flex flex-col items-center justify-center">
+        <h1>출금신청</h1>
+
+        <script>
+            function WriteForm__submit(form) {
+                form.accountName.value = form.accountName.value.trim();
+                if (form.accountName.value.length == 0) {
+                    alert('계좌번호를 입력하세요');
+                    form.accountName.focus();
+                    return;
+                }
+                form.accountNumber.value = form.accountNumber.value.trim();
+                if (form.accountNumber.value.length == 0) {
+                    alert('계좌번호를 입력하세요');
+                    form.accountNumber.focus();
+                    return;
+                }
+                form.price.value = form.price.value.trim();
+                form.submit();
+            }
+
+        </script>
+
+        <form id="form" th:action="@{/withdraw/apply}" method="POST" onsubmit="WriteForm__submit(this); return false;">
+            <input type="hidden" name="content" placeholder="내용을 입력해주세요." />
+            <div>
+                <span>계좌명</span>
+                <input type="text" name="accountName">
+            </div>
+            <div>
+                <span>계좌번호</span>
+                <input type="text" name="accountNumber">
+            </div>
+
+
+            <div>
+                보유 예치금 : [[${actorRestCash}]]
+            </div>
+
+            <div th:with="maxUseRestCash =${actorRestCash}">
+                <span>출금신청 예치금 : </span>
+                <input type="number" id="PaymentForm__useRestCash" name ="requestCash"
+                       th:placeholder="|0 ~ ${maxUseRestCash}|"
+                       class="input input-bordered min-w-[300px]" min="0" th:max="${maxUseRestCash}"
+                       onkeydown="PaymentForm__useRestCashFix();"
+                       onkeyup="PaymentForm__useRestCashFix();"
+                >
+                <label class="inline-flex items-center ml-3">
+                    <span>전액사용</span>
+                    <input onchange="PaymentForm__useRestCashAllChanged();" id="PaymentForm__useRestCashAll"
+                           type="checkbox" class="ml-2 checkbox">
+                </label>
+            </div>
+
+            <div>
+                <span>신청</span>
+                <input type="submit" value="생성">
+            </div>
+        </form>
+        </div>
+
+    </section>
+
+    <script>
+        const $PaymentForm__useRestCash = $("#PaymentForm__useRestCash");
+        const $PaymentForm__useRestCashAll = $("#PaymentForm__useRestCashAll");
+        function PaymentForm__useRestCashFix() {
+            let useRestCash = parseInt($PaymentForm__useRestCash.val());
+
+            if (isNaN(useRestCash)) {
+                useRestCash = 0;
+            }
+
+            const maxUseRestCash = parseInt($PaymentForm__useRestCash.attr('max'));
+
+            if (useRestCash > maxUseRestCash) {
+                useRestCash = maxUseRestCash;
+                $PaymentForm__useRestCash.val(maxUseRestCash);
+            }
+
+            if ( useRestCash == maxUseRestCash ) {
+                $PaymentForm__useRestCashAll.prop('checked', true);
+            }
+            else {
+                $PaymentForm__useRestCashAll.prop('checked', false);
+            }
+
+        }
+
+        function PaymentForm__useRestCashAllChanged() {
+            if ( $PaymentForm__useRestCashAll.prop('checked') ) {
+                const maxUseRestCash = parseInt($PaymentForm__useRestCash.attr('max'));
+                $PaymentForm__useRestCash.val(maxUseRestCash);
+            }
+            else {
+                $PaymentForm__useRestCash.val(0);
+            }
+
+            PaymentForm__useRestCashFix();
+        }
+
+        PaymentForm__useRestCashFix();
+    </script>
+
+</main>
+</body>
+</html>
