@@ -1,0 +1,24 @@
+server:
+  port: 9000
+spring:
+  batch:
+    job:
+      names: ${job.name:NONE}
+      enabled: false #Batch 자동실행 방지
+    jdbc:
+      initialize-schema: ALWAYS
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  datasource:
+    url: jdbc:mariadb://127.0.0.1:3306/backend_school_final_project__dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

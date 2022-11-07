@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>글 상세페이지</title>
+</head>
+
+<body>
+<main layout:fragment="main">
+    <div class="container">
+        <div class="mt-2">
+            <a th:href="@{|/post/${post.id}/modify|}" class="btn btn-active btn-link">수정</a>
+            <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/post/${post.id}/delete|}" class="btn btn-active btn-link">삭제</a>
+        </div>
+
+        <h1>글 상세페이지</h1>
+
+        <div>
+            작성 : [[${post.createDate}]]
+        </div>
+
+        <div>
+            수정 : [[${post.modifyDate}]]
+        </div>
+
+        <div>
+            작성자 : [[${post.author.username}]]
+        </div>
+
+        <div>
+            제목 : [[${post.subject}]]
+        </div>
+
+
+        <div class="toast-ui-viewer">
+            <script type="text/x-template">
+                [[${post.content}]]
+            </script>
+        </div>
+        <div>
+            해시태그 :
+            <th:block th:utext="${post.extra_hashTagLinks}"/>
+        </div>
+
+
+    </div>
+
+</main>
+
+</body>
+</html>
