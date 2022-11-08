@@ -118,4 +118,7 @@ public class Member extends BaseEntity {
         );
     }
 
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 }

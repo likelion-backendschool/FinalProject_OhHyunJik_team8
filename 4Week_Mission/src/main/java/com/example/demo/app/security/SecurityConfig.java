@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeRequests(
                         authorizeRequests -> authorizeRequests
                                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                                .antMatchers("/member/login", "/member/join")
+                                .antMatchers("/api/v1/member/login", "/api/v1/member/join", "/api/v1/member/test")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated() // 최소자격 : 로그인
