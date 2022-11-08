@@ -78,7 +78,7 @@ public interface InitDataBefore {
         memberService.addCash(member1, 20_000, "충전__무통장입금");
         memberService.addCash(member1, -5_000, "출금__일반");
         memberService.addCash(member1, 1_000_000, "충전__무통장입금");
-
+        memberService.addCash(member1, 1_000_0000, "충전__무통장입금");
         memberService.addCash(member2, 2_000_000, "충전__무통장입금");
 
         // 1번 주문 : 결제완료
@@ -108,6 +108,31 @@ public interface InitDataBefore {
                         product2
                 )
         );
+
+        // 배치 시도 위한 결제 완료 80
+        for(int i=0;i<80;i++){
+            // 1번 주문 : 결제완료
+            Order order4 = helper.order(member1, Arrays.asList(
+                            product1,
+                            product2
+                    )
+            );
+            int order1PayPrice_2 = order4.calculatePayPrice();
+            orderService.payByRestCashOnly(order4);
+        }
+        // 배치 시도 위한 결제 환불 20
+        for(int i=0;i<30;i++){
+            // 2번 주문 : 결제 후 환불
+            Order order5 = helper.order(member1, Arrays.asList(
+                            product1,
+                            product2
+                    )
+            );
+            orderService.payByRestCashOnly(order5);
+
+            orderService.refund(order5);
+        }
+
 
 
         cartService.addItem(member2, product1);

@@ -44,7 +44,7 @@
                         <td th:text="${item.member.username}"></td>
                         <td>
                             <a th:if="${item.isComplete}==false" href="javascript:;" onclick="$(this).next().submit();"
-                               class="btn btn-primary btn-xs">건별정산</a>
+                               class="btn btn-primary btn-xs">출금승인</a>
                             <form method="POST" th:action="@{|/adm/withdraw/requestOne/${item.id}|}"
                                   hidden></form>
                         </td>
@@ -52,10 +52,10 @@
                     </tbody>
                 </table>
 
-                <a href="javascript:;" onclick="RebateForm__submit();" class="btn btn-primary btn-sm">선택정산</a>
-                <form method="POST" name="rebateForm" th:action="@{|/adm/rebate/rebate|}" hidden>
-                    <input type="hidden" name="ids">
-                </form>
+<!--                <a href="javascript:;" onclick="RebateForm__submit();" class="btn btn-primary btn-sm">선택승인</a>-->
+<!--                <form method="POST" name="rebateForm" th:action="@{|/adm/rebate/rebate|}" hidden>-->
+<!--                    <input type="hidden" name="ids">-->
+<!--                </form>-->
 
                 <script>
                     // 전체선택 체크박스

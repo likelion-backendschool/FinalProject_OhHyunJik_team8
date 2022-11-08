@@ -57,7 +57,7 @@ public class AdmRebateController {
         RsData rebateRsData = rebateService.rebate(orderItemId);
         String referer = req.getHeader("Referer");
         String yearMonth = Ut.url.getQueryParamValue(referer, "yearMonth", "");
-        String redirect = "redirect:/adm/rebate/rebateOrderItemList?yearMonth=" + yearMonth;
+        String redirect = "redirect:/adm/rebate/rebateOrderItemList?yearMonth=" + "2022-11";
         redirect = rebateRsData.addMsgToUrl(redirect);
         return redirect;
     }
@@ -77,7 +77,7 @@ public class AdmRebateController {
         String referer = req.getHeader("Referer");
         String yearMonth = Ut.url.getQueryParamValue(referer, "yearMonth", "");
 
-        String redirect = "redirect:/adm/rebate/rebateOrderItemList?yearMonth=" + yearMonth;
+        String redirect = "redirect:/adm/rebate/rebateOrderItemList?yearMonth=" + "2022-11";
         redirect += "&msg=" + Ut.url.encode("%d건의 정산품목을 정산처리하였습니다.".formatted(idsArr.length));
 
         return redirect;

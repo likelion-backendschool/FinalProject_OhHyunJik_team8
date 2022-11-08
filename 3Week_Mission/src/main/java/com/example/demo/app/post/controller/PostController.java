@@ -29,6 +29,7 @@ public class PostController {
     private final PostService postService;
     private final HashTagService hashTagService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/list")
     public String showList(Model model,
                            @RequestParam(value = "kw", defaultValue = "") String kw,
@@ -56,6 +57,7 @@ public class PostController {
         return "redirect:/post/%d?msg=%s".formatted(post.getId(), msg);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public String showDetail(Model model,
                              @PathVariable Long id) {
@@ -63,7 +65,7 @@ public class PostController {
         model.addAttribute("post", post);
         return "post/detail";
     }
-
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}/modify")
     public String showModify(Model model,
                              @PathVariable Long id) {
@@ -72,7 +74,7 @@ public class PostController {
         return "post/modify";
     }
 
-
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}/delete")
     public String deleteDetail(@PathVariable Long id) {
         postService.delete(id);
