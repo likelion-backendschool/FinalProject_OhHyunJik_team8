@@ -38,8 +38,11 @@ public class SecurityConfig {
                 )// httpBaic 로그인 방식 끄기
                 .authorizeRequests(
                         authorizeRequests -> authorizeRequests
-                                .antMatchers("/**")
+                                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                                .antMatchers("/member/login", "/member/join")
                                 .permitAll()
+                                .anyRequest()
+                                .authenticated() // 최소자격 : 로그인
                 )
                 .formLogin(
                         formLogin -> formLogin.disable() // 폼 로그인 방식 끄기
