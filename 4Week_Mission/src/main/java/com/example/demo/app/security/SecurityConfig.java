@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
@@ -26,20 +29,23 @@ public class SecurityConfig {
         http
                 .csrf(
                         csrf -> csrf.disable()
-                )
+                )// CSRF 토큰 끄기
+                .cors(
+                        cors -> cors.disable()
+                ) // 타 도메인에서 API 호출 가능
+                .httpBasic(
+                        httpBasic -> httpBasic.disable()
+                )// httpBaic 로그인 방식 끄기
                 .authorizeRequests(
                         authorizeRequests -> authorizeRequests
                                 .antMatchers("/**")
                                 .permitAll()
                 )
                 .formLogin(
-                        formLogin -> formLogin
-                                .loginPage("/member/login") // GET
-                                .loginProcessingUrl("/member/login") // POST
-                                .successHandler(authenticationSuccessHandler)
+                        formLogin -> formLogin.disable() // 폼 로그인 방식 끄기
                 )
-                .logout(
-                        logout -> logout.logoutUrl("/member/logout")
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(STATELESS)
                 );
         return http.build();
     }
