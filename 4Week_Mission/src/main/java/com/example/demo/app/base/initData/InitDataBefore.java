@@ -109,29 +109,29 @@ public interface InitDataBefore {
                 )
         );
 
-        // 배치 시도 위한 결제 완료 80
-        for(int i=0;i<80;i++){
-            // 1번 주문 : 결제완료
-            Order order4 = helper.order(member1, Arrays.asList(
-                            product1,
-                            product2
-                    )
-            );
-            int order1PayPrice_2 = order4.calculatePayPrice();
-            orderService.payByRestCashOnly(order4);
-        }
-        // 배치 시도 위한 결제 환불 20
-        for(int i=0;i<30;i++){
-            // 2번 주문 : 결제 후 환불
-            Order order5 = helper.order(member1, Arrays.asList(
-                            product1,
-                            product2
-                    )
-            );
-            orderService.payByRestCashOnly(order5);
-
-            orderService.refund(order5);
-        }
+//        // 배치 시도 위한 결제 완료 80
+//        for(int i=0;i<80;i++){
+//            // 1번 주문 : 결제완료
+//            Order order4 = helper.order(member1, Arrays.asList(
+//                            product1,
+//                            product2
+//                    )
+//            );
+//            int order1PayPrice_2 = order4.calculatePayPrice();
+//            orderService.payByRestCashOnly(order4);
+//        }
+//        // 배치 시도 위한 결제 환불 20
+//        for(int i=0;i<30;i++){
+//            // 2번 주문 : 결제 후 환불
+//            Order order5 = helper.order(member1, Arrays.asList(
+//                            product1,
+//                            product2
+//                    )
+//            );
+//            orderService.payByRestCashOnly(order5);
+//
+//            orderService.refund(order5);
+//        }
 
 
 
