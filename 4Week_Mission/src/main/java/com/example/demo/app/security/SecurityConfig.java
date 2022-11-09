@@ -15,6 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -32,9 +35,9 @@ public class SecurityConfig {
                 .csrf(
                         csrf -> csrf.disable()
                 )// CSRF 토큰 끄기
-                .cors(
-                        cors -> cors.disable()
-                ) // 타 도메인에서 API 호출 가능
+                .cors(cors -> cors
+                        .configurationSource(corsConfigurationSource())
+                )
                 .httpBasic(
                         httpBasic -> httpBasic.disable()
                 )// httpBaic 로그인 방식 끄기
@@ -56,6 +59,18 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class
                 );
         return http.build();
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/api/**", corsConfiguration);
+        return urlBasedCorsConfigurationSource;
     }
 }
 
