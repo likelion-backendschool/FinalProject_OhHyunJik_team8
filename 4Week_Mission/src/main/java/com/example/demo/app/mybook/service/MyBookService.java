@@ -37,17 +37,17 @@ public class MyBookService {
     }
 
     public List<MyBookListRes> findAll(MemberContext memberContext) {
-        List<MyBook> list = myBookRepository.findAllByMemberId(memberContext.getId());
+        List<MyBook> myBookList = myBookRepository.findAllByMemberId(memberContext.getId());
         List<MyBookListRes> result = new ArrayList<>();
-        for(MyBook mb : list){
-            MyBookListRes test = MyBookListRes.builder()
+        for(MyBook mb : myBookList){
+            MyBookListRes myBookListRes = MyBookListRes.builder()
                     .id(mb.getId())
                     .createDate(mb.getCreateDate())
                     .modifyDate(mb.getModifyDate())
                     .ownerId(mb.getMember().getId())
                     .product(mb.getBook().productRes())
                     .build();
-            result.add(test);
+            result.add(myBookListRes);
         }
 
         return result;
