@@ -10,4 +10,5 @@ import java.util.List;
 public interface MyBookRepository extends JpaRepository<MyBook, Long> {
     List<MyBook> findAllByMemberId(Long id);
 
+    MyBook findByIdAndMemberId(Long myBookId, Long id);
 }

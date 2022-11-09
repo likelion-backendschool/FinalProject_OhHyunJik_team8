@@ -8,10 +8,8 @@ import java.util.List;
 
 @Data
 @SuperBuilder
-public class ProductRes {
+public class MyBookDetailProduct {
     private long id;
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
     private long authorId;
     private String authorName;
     private String subject;

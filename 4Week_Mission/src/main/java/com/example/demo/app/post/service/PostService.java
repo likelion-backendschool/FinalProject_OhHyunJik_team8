@@ -3,6 +3,7 @@ package com.example.demo.app.post.service;
 import com.example.demo.app.hashtag.entity.HashTag;
 import com.example.demo.app.hashtag.service.HashTagService;
 import com.example.demo.app.member.entity.Member;
+import com.example.demo.app.mybook.dto.BookChapters;
 import com.example.demo.app.post.entity.Post;
 import com.example.demo.app.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -81,6 +82,37 @@ public class PostService {
         }
 
         return postRepository.findAll();
+    }
+
+    public List<Post> getPosts(String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        String keyType = "";
+        if (kw == null || kw.trim().length() == 0) {
+            return postRepository.findAll();
+        }
+        if (keyType.equals("keyword")) {
+            return  postRepository.findByHashTagContains(kw);
+        }
+
+        return postRepository.findAll();
+    }
+
+    public List<BookChapters> BookChapter(String kw) {
+        List<BookChapters> sorts = new ArrayList<>();
+        List<Post> postList = postRepository.findByHashTagContains(kw);
+
+        for(Post post : postList){
+            BookChapters bookChapters = BookChapters.builder()
+                    .id(post.getId())
+                    .subject(post.getSubject())
+                    .content(post.getContent())
+                    .contentHtml((post.getContent()))
+                    .build();
+            sorts.add(bookChapters);
+        }
+        return sorts;
+
     }
 
     public void loadForPrintData(List<Post> posts) {

@@ -1,10 +1,14 @@
 package com.example.demo.app.mybook.service;
 
 import com.example.demo.app.member.entity.Member;
+import com.example.demo.app.mybook.dto.BookChapters;
 import com.example.demo.app.mybook.dto.MyBookListRes;
+import com.example.demo.app.mybook.dto.MyBookDetail;
 import com.example.demo.app.mybook.entity.MyBook;
 import com.example.demo.app.mybook.repository.MyBookRepository;
 import com.example.demo.app.order.entity.OrderItem;
+import com.example.demo.app.post.entity.Post;
+import com.example.demo.app.post.service.PostService;
 import com.example.demo.app.product.entity.Product;
 import com.example.demo.app.security.dto.MemberContext;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +23,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MyBookService {
     private final MyBookRepository myBookRepository;
-
+    private final PostService postService;
     @Transactional
     public void createMyBook(Member member, Product product){
         MyBook myBook = MyBook.builder()
@@ -51,5 +55,17 @@ public class MyBookService {
         }
 
         return result;
+    }
+
+    public MyBookDetail findById(MemberContext memberContext, Long myBookId) {
+        MyBook myBook = myBookRepository.findByIdAndMemberId(myBookId,memberContext.getId());
+        List<BookChapters> bookChaptersList = postService.BookChapter(myBook.getBook().getPostKeyword().getContent()) ;
+        MyBookDetail productDetail = MyBookDetail.builder()
+                .id(myBook.getId())
+                .createDate(myBook.getCreateDate())
+                .modifyDate(myBook.getModifyDate())
+                .product(myBook.getBook().productDetailRes(bookChaptersList))
+                .build();
+        return productDetail;
     }
 }

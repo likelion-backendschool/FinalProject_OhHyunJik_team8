@@ -3,12 +3,16 @@ package com.example.demo.app.product.entity;
 import com.example.demo.app.base.entity.BaseEntity;
 import com.example.demo.app.keyword.entity.Keyword;
 import com.example.demo.app.member.entity.Member;
+import com.example.demo.app.mybook.dto.BookChapters;
+import com.example.demo.app.mybook.dto.MyBookDetailProduct;
 import com.example.demo.app.mybook.dto.ProductRes;
+import com.example.demo.app.post.entity.Post;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 @Entity
 @Getter
@@ -54,7 +58,16 @@ public class Product extends BaseEntity {
                 .subject(getSubject())
                 .build();
         return productRes;
+    }
 
-
+    public MyBookDetailProduct productDetailRes(List<BookChapters> bookChaptersList){
+        MyBookDetailProduct myBookDetailProduct = MyBookDetailProduct.builder()
+                .id(getId())
+                .authorId(seller.getId())
+                .authorName(seller.getName())
+                .subject(getSubject())
+                .bookChapters(bookChaptersList)
+                .build();
+        return myBookDetailProduct;
     }
 }
