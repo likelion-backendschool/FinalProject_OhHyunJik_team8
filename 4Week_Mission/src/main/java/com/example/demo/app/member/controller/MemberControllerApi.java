@@ -41,7 +41,9 @@ public class MemberControllerApi {
             return Ut.spring.responseEntityOf(RsData.failOf(null));
         }
 
-        return Ut.spring.responseEntityOf(RsData.successOf(memberContext));
+        return Ut.spring.responseEntityOf(RsData.successOf( Ut.mapOf(
+                "member", memberContext
+        )));
     }
 
     @PostMapping("/login")
