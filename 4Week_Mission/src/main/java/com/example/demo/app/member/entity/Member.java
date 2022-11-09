@@ -1,6 +1,7 @@
 package com.example.demo.app.member.entity;
 
 import com.example.demo.app.base.entity.BaseEntity;
+import com.example.demo.app.mybook.dto.ProductRes;
 import com.example.demo.util.Ut;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -121,4 +122,5 @@ public class Member extends BaseEntity {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
 }

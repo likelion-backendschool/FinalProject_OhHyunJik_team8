@@ -3,6 +3,7 @@ package com.example.demo.app.product.entity;
 import com.example.demo.app.base.entity.BaseEntity;
 import com.example.demo.app.keyword.entity.Keyword;
 import com.example.demo.app.member.entity.Member;
+import com.example.demo.app.mybook.dto.ProductRes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -41,5 +42,19 @@ public class Product extends BaseEntity {
 
     public String getJdenticon() {
         return "product__" + getId();
+    }
+
+    public ProductRes productRes(){
+        ProductRes productRes = ProductRes.builder()
+                .id(getId())
+                .createDate(getCreateDate())
+                .modifyDate(getModifyDate())
+                .authorId(seller.getId())
+                .authorName(seller.getName())
+                .subject(getSubject())
+                .build();
+        return productRes;
+
+
     }
 }

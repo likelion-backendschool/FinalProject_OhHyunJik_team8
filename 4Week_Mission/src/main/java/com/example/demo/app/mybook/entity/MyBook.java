@@ -19,8 +19,8 @@ import static javax.persistence.FetchType.LAZY;
 @SuperBuilder
 @ToString(callSuper = true)
 public class MyBook extends BaseEntity {
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     private Member member;
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     private Product book;
 }
