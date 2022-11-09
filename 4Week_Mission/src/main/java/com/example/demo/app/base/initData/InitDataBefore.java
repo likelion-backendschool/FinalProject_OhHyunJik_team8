@@ -44,7 +44,7 @@ public interface InitDataBefore {
         }
         Helper helper = new Helper();
 
-        Member member1 = memberService.join("user1", "1234", "user1@test.com","");
+        Member member1 = memberService.join("user1", "1234", "user1@test.com","내이름은 유저");
         Member member2 = memberService.join("user2", "1234", "user2@test.com","user2");
         Member member3 = memberService.join("user3", "1234", "user3@test.com",null);
 
@@ -60,7 +60,12 @@ public interface InitDataBefore {
 
         Post post1 = postService.write(member1,"제목 1" ,"- 내용1",keyword1);
         Post post2 = postService.write(member1,"제목 2" ,"- 내용3",keyword2);
-
+        Post post3 = postService.write(member1,"제목 3" ,"- 내용1",keyword1);
+        Post post4 = postService.write(member1,"제목 7" ,"<h1>아아앙아 내일 예비군",keyword2);
+        Post post5 = postService.write(member1,"제목 8" ,"<h1>셔틀버스 실화냐",keyword1);
+        Post post6 = postService.write(member1,"제목 9" ,"<h1>오늘 밤새고 예비군 간다",keyword2);
+        Post post7 = postService.write(member1,"제목을 위한 테스트" ,"<h1>철원 너무 가슴이 두근 거린다.",keyword1);
+        Post post8 = postService.write(member1,"글 15" ,"<h1>머리 잘라야지",keyword2);
         Keyword productTag1 = keywordService.getKeyWordByContent("키워드1");
         Keyword productTag2 = keywordService.getKeyWordByContent("키워드4");
 

@@ -24,15 +24,14 @@ import static org.springframework.util.MimeTypeUtils.ALL_VALUE;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/myBooks", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/myBooks")
 @RequiredArgsConstructor
 @Tag(name = "ApiV1MyBooksController", description = "로그인 된 회윈이 구매한 책 정보")
 public class MyBookController {
     private final MyBookService myBookService;
 
 
-    @GetMapping(value = "", consumes = ALL_VALUE)
-    @Operation(summary =  "로그인된 회원이 보유한 도서 목록", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping(value = "")
     public ResponseEntity<RsData> list(@AuthenticationPrincipal MemberContext memberContext) {
         List<MyBookListRes> myBooks = myBookService.findAll(memberContext);
 
@@ -46,7 +45,6 @@ public class MyBookController {
     }
 
     @GetMapping("/{myBookId}")
-    @Operation(summary =  "로그인된 회원이 보유한 도서 상세페이지", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<RsData> detail(@AuthenticationPrincipal MemberContext memberContext, @PathVariable Long myBookId) {
         MyBookDetail myBookDetailRes = myBookService.findById(memberContext,myBookId);
         return Ut.spring.responseEntityOf(
