@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 
 @Getter
-@JsonIncludeProperties({"id", "createDate", "modifyDate", "username", "email","nickname","emailVerified", "authorities"})
+@JsonIncludeProperties({"id", "createDate", "modifyDate", "username", "email","nickname","emailVerified"})
 public class MemberContext extends User {
     private final Long id;
     private final LocalDateTime createDate;
