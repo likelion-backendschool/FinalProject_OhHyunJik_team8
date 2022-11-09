@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>글 수정페이지</title>
+</head>
+
+<body>
+<section layout:fragment="main">
+    <script>
+        function findUsername__submitForm(form) {
+            form.email.value = form.email.value.trim();
+            if (form.email.value.length == 0) {
+                alert('이메일을 입력해주세요.');
+                form.email.focus();
+                return;
+            }
+
+
+            form.submit();
+        }
+    </script>
+    <div class="container">
+
+        <form id="form" method="POST" onsubmit="findUsername__submitForm(this); return false;">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">이메일</span>
+                </label>
+                <input type="email" name="email" placeholder="이메일" class="input input-bordered" maxlength="50" th:value="${member.email}">
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">작가명</span>
+                </label>
+                <input type="text" name="nickname" placeholder="작가명" class="input input-bordered" maxlength="50" th:value="${member.nickname}">
+            </div>
+
+            <div class="grid grid-cols-2 mt-2 gap-2">
+                <input class="btn btn-primary" type="submit" value="수정">
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>
