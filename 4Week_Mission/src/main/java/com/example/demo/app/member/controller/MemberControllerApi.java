@@ -8,6 +8,8 @@ import com.example.demo.app.member.service.MemberService;
 import com.example.demo.app.member.service.MemberServiceApi;
 import com.example.demo.app.security.dto.MemberContext;
 import com.example.demo.util.Ut;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,7 @@ public class MemberControllerApi {
     }
 
     @GetMapping("/me")
+    @Operation(summary =  "로그인된 회원이 정보", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<RsData> me(@AuthenticationPrincipal MemberContext memberContext) {
         if (memberContext == null) { // 임시코드, 나중에는 시프링 시큐리티를 이용해서 로그인을 안했다면, 아예 여기로 못 들어오도록
             return Ut.spring.responseEntityOf(RsData.failOf(null));
