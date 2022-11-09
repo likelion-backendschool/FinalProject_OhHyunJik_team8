@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 
 @Getter
-@JsonIncludeProperties({"id", "createDate", "modifyDate", "username", "email", "authorities"})
+@JsonIncludeProperties({"id", "createDate", "modifyDate", "username", "email","nickname","emailVerified", "authorities"})
 public class MemberContext extends User {
     private final Long id;
     private final LocalDateTime createDate;
@@ -25,6 +25,7 @@ public class MemberContext extends User {
     private final String email;
     private final String nickname;
     private final Set<GrantedAuthority> authorities;
+    private boolean emailVerified;
 
     public MemberContext(Member member, List<GrantedAuthority> authorities) {
         super(member.getUsername(), member.getPassword(), authorities);
@@ -36,6 +37,9 @@ public class MemberContext extends User {
         this.email = member.getEmail();
         this.nickname = member.getNickname();
         this.authorities = member.getAuthorities().stream().collect(Collectors.toSet());
+        if(!member.getEmail().isEmpty()){
+            this.emailVerified = true;
+        }
     }
 
     public MemberContext(Member member) {
@@ -48,6 +52,9 @@ public class MemberContext extends User {
         this.email = member.getEmail();
         this.nickname = member.getNickname();
         this.authorities = member.getAuthorities().stream().collect(Collectors.toSet());
+        if(!member.getEmail().isEmpty()){
+            this.emailVerified = true;
+        }
     }
 
     public Member getMember() {
